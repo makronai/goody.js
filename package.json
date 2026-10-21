@@ -1,19 +1,94 @@
 {
   "name": "goodyjs",
   "version": "0.1.0",
-"description": "Full stack framework",
+  "description": "A lightweight, zero-dependency full-stack JavaScript framework uniting reactive UI, native HTTP server, composable middleware, SSR, and zero-config tooling.",
+  "author": "dwmk",
+  "license": "MIT",
   "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "good": "./bin/good.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./reactivity": {
+      "types": "./dist/reactivity/index.d.ts",
+      "import": "./dist/reactivity/index.js",
+      "default": "./dist/reactivity/index.js"
+    },
+    "./ui": {
+      "types": "./dist/ui/index.d.ts",
+      "import": "./dist/ui/index.js",
+      "default": "./dist/ui/index.js"
+    },
+    "./server": {
+      "types": "./dist/server/index.d.ts",
+      "import": "./dist/server/index.js",
+      "default": "./dist/server/index.js"
+    },
+    "./router": {
+      "types": "./dist/router/index.d.ts",
+      "import": "./dist/router/index.js",
+      "default": "./dist/router/index.js"
+    },
+    "./middleware": {
+      "types": "./dist/middleware/index.d.ts",
+      "import": "./dist/middleware/index.js",
+      "default": "./dist/middleware/index.js"
+    },
+    "./ssr": {
+      "types": "./dist/ssr/index.d.ts",
+      "import": "./dist/ssr/index.js",
+      "default": "./dist/ssr/index.js"
+    },
+    "./cli": {
+      "types": "./dist/cli/index.d.ts",
+      "import": "./dist/cli/index.js",
+      "default": "./dist/cli/index.js"
+    },
+    "./jsx-runtime": {
+      "types": "./dist/ui/h.d.ts",
+      "import": "./dist/ui/h.js",
+      "default": "./dist/ui/h.js"
+    }
+  },
+  "files": [
+    "dist",
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "goodyjs",
+    "framework",
+    "full-stack",
+    "reactive",
+    "signals",
+    "ssr",
+    "zero-dependency",
+    "http-server",
+    "router"
+  ],
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
-    "build": "vite build",
-    "preview": "vite preview",
-    "clean": "rm -rf dist server.js",
+    "build:package": "tsx scripts/build-package.ts",
+    "build:app": "vite build --outDir dist-demo",
+    "build": "tsx scripts/build-package.ts && vite build --outDir dist-demo",
+    "preview": "vite preview --outDir dist-demo",
+    "clean": "rm -rf dist dist-demo server.js",
     "lint": "tsc --noEmit",
     "test": "tsx --test tests/reactivity.test.ts tests/ui.test.ts tests/router.test.ts tests/server.test.ts tests/middleware.test.ts tests/ssr.test.ts tests/cli.test.ts",
     "benchmark": "tsx scripts/benchmark.ts"
   },
-"keywords": [],
-  "author": "dwmk",
 
   "dependencies": {
     "@google/genai": "^2.4.0",
