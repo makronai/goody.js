@@ -18,7 +18,7 @@ export const ArchitectureDocs: React.FC = () => {
         <div>
           <div className="flex items-center gap-2">
             <BookOpen className="w-5 h-5 text-teal-400" />
-            <h2 className="text-lg font-bold text-white tracking-tight">GoodJS Architecture & Documentation</h2>
+            <h2 className="text-lg font-bold text-white tracking-tight">GoodyJS Architecture & Documentation</h2>
           </div>
           <p className="text-xs text-slate-400 mt-1 max-w-2xl">
             A small but complete framework. One cohesive full-stack runtime replacing React + Vue + Express + Vite
@@ -67,16 +67,16 @@ export const ArchitectureDocs: React.FC = () => {
       {activeSection === 'manifesto' && (
         <div className="space-y-6">
           <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
-            <h3 className="text-base font-bold text-white">The GoodJS Milestone 1 Philosophy</h3>
+            <h3 className="text-base font-bold text-white">The GoodyJS Milestone 1 Philosophy</h3>
             <p className="text-xs text-slate-300 leading-relaxed">
               Established JavaScript ecosystems have grown into heavyweight matrices of fragmented tooling: React for rendering,
               Redux/Zustand for state, Express for APIs, Vite for bundling, React Router for navigation, and specialized SSR plugins.
               A simple CRUD application now pulls thousands of transitive dependencies and weighs over 150 KB just to boot.
             </p>
             <p className="text-xs text-slate-300 leading-relaxed">
-              GoodJS takes the opposite approach: <strong>make the first stable release a small but complete framework</strong> rather
+              GoodyJS takes the opposite approach: <strong>make the first stable release a small but complete framework</strong> rather
               than an incomplete attempt to reproduce every feature in five ecosystems simultaneously.
-              One GoodJS application can render a reactive UI, serve API routes, run middleware, build for production, and deploy
+              One GoodyJS application can render a reactive UI, serve API routes, run middleware, build for production, and deploy
               without React, Vue, Express, or Vite.
             </p>
 
@@ -118,11 +118,11 @@ export const ArchitectureDocs: React.FC = () => {
       {activeSection === 'migration' && (
         <div className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* React -> GoodJS */}
+            {/* React -> GoodyJS */}
             <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-3">
               <div className="flex items-center justify-between">
                 <h4 className="text-xs font-bold text-emerald-400 uppercase tracking-wider">
-                  React 19 ➔ GoodJS Migration
+                  React 19 ➔ GoodyJS Migration
                 </h4>
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400">UI & State</span>
               </div>
@@ -137,18 +137,18 @@ export const ArchitectureDocs: React.FC = () => {
                   &lt;button onClick=&#123;() =&gt; setCount(c =&gt; c + 1)&#125;&gt;&#123;count&#125;&lt;/button&gt;
                 </div>
                 <div className="p-2.5 rounded bg-slate-950 border border-emerald-900/60 text-emerald-300">
-                  <span className="text-emerald-400 block mb-1 font-sans text-[10px] font-bold">GoodJS:</span>
+                  <span className="text-emerald-400 block mb-1 font-sans text-[10px] font-bold">GoodyJS:</span>
                   const count = signal(0);<br />
                   h('button', &#123; onClick: () =&gt; count.update(n =&gt; n + 1) &#125;, () =&gt; count())
                 </div>
               </div>
             </div>
 
-            {/* Express -> GoodJS */}
+            {/* Express -> GoodyJS */}
             <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-3">
               <div className="flex items-center justify-between">
                 <h4 className="text-xs font-bold text-cyan-400 uppercase tracking-wider">
-                  Express ➔ GoodJS Migration
+                  Express ➔ GoodyJS Migration
                 </h4>
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400">HTTP Server</span>
               </div>
@@ -163,7 +163,7 @@ export const ArchitectureDocs: React.FC = () => {
                   app.get('/api/users/:id', (req, res) =&gt; res.json(&#123; id: req.params.id &#125;));
                 </div>
                 <div className="p-2.5 rounded bg-slate-950 border border-cyan-900/60 text-cyan-300">
-                  <span className="text-cyan-400 block mb-1 font-sans text-[10px] font-bold">GoodJS:</span>
+                  <span className="text-cyan-400 block mb-1 font-sans text-[10px] font-bold">GoodyJS:</span>
                   const app = createServer();<br />
                   app.get('/api/users/:id', (ctx) =&gt; (&#123; id: ctx.req.params.id &#125;));
                 </div>
@@ -179,7 +179,7 @@ export const ArchitectureDocs: React.FC = () => {
             <h3 className="text-sm font-bold text-white">Public API Reference (v0.1.0)</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
               <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
-                <span className="text-emerald-400 font-bold block">goodjs/reactivity</span>
+                <span className="text-emerald-400 font-bold block">goodyjs/reactivity</span>
                 <p className="text-slate-300">signal&lt;T&gt;(initial: T): Signal&lt;T&gt;</p>
                 <p className="text-slate-300">computed&lt;T&gt;(derive: () =&gt; T): Computed&lt;T&gt;</p>
                 <p className="text-slate-300">effect(run: () =&gt; void | CleanupFn): CleanupFn</p>
@@ -189,7 +189,7 @@ export const ArchitectureDocs: React.FC = () => {
               </div>
 
               <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
-                <span className="text-cyan-400 font-bold block">goodjs/ui</span>
+                <span className="text-cyan-400 font-bold block">goodyjs/ui</span>
                 <p className="text-slate-300">component&lt;P&gt;(fn: (props: P) =&gt; VNodeChild)</p>
                 <p className="text-slate-300">h(tag, props, ...children): VNode</p>
                 <p className="text-slate-300">render(vnode, container): () =&gt; void</p>
@@ -199,7 +199,7 @@ export const ArchitectureDocs: React.FC = () => {
               </div>
 
               <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
-                <span className="text-purple-400 font-bold block">goodjs/server</span>
+                <span className="text-purple-400 font-bold block">goodyjs/server</span>
                 <p className="text-slate-300">createServer(): GoodServerInstance</p>
                 <p className="text-slate-300">app.get(path, handler)</p>
                 <p className="text-slate-300">app.post(path, handler)</p>
@@ -208,7 +208,7 @@ export const ArchitectureDocs: React.FC = () => {
               </div>
 
               <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
-                <span className="text-indigo-400 font-bold block">goodjs/ssr</span>
+                <span className="text-indigo-400 font-bold block">goodyjs/ssr</span>
                 <p className="text-slate-300">renderToString(vnode, options?): string</p>
                 <p className="text-slate-300">renderToDocument(options): string</p>
                 <p className="text-slate-300">escapeHtml(str: unknown): string</p>
@@ -226,7 +226,7 @@ export const ArchitectureDocs: React.FC = () => {
               <h3 className="text-sm font-bold text-white">Security Architecture & Safe Defaults</h3>
             </div>
             <p className="text-xs text-slate-300 leading-relaxed">
-              GoodJS incorporates hardened web application security by default rather than as an afterthought plugin:
+              GoodyJS incorporates hardened web application security by default rather than as an afterthought plugin:
             </p>
             <div className="space-y-2 text-xs">
               <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">

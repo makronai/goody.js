@@ -139,7 +139,7 @@ export function createRouter(
     return () => {
       const match = activeRouteSignal();
       if (!match) {
-        return h('div', { class: 'goodjs-not-found' }, '404 - Page Not Found');
+        return h('div', { class: 'goodyjs-not-found' }, '404 - Page Not Found');
       }
 
       const Component = match.route.component;

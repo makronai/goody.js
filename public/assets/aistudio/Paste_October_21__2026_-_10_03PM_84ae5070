@@ -3,7 +3,7 @@
 
 Act as a Principal Staff Engineer, Distinguished Software Architect, JavaScript Runtime Engineer, Compiler Engineer, Browser Rendering Specialist, Security Engineer, Performance Engineer, and Open-Source Project Maintainer.
 
-Your mission is to design, implement, test, document, benchmark, and prepare a new open-source JavaScript/TypeScript framework called **GoodJS**.
+Your mission is to design, implement, test, document, benchmark, and prepare a new open-source JavaScript/TypeScript framework called **GoodyJS**.
 
 The framework must be designed to compete with React, Vue, Next.js, Express, and Vite by providing a coherent, lightweight alternative that can replace several separate tools in a single project.
 
@@ -13,7 +13,7 @@ This is not a request for a proposal, a landing page, a proof-of-concept, or a s
 
 When repository and terminal access are available, make changes directly in the workspace. If an environment cannot create files or execute commands, provide complete, copy-pasteable files and clearly distinguish implemented work from work that could not be executed or verified.
 
-Do not claim that GoodJS outperforms established frameworks until reproducible benchmarks demonstrate it.
+Do not claim that GoodyJS outperforms established frameworks until reproducible benchmarks demonstrate it.
 
 ---
 
@@ -21,10 +21,10 @@ Do not claim that GoodJS outperforms established frameworks until reproducible b
 
 ## 0.1 Official identity
 
-- Brand: GoodJS
-- npm package name: `goodjs`
+- Brand: GoodyJS
+- npm package name: `goodyjs`
 - CLI command: `good`
-- Repository name: `goodjs`
+- Repository name: `goodyjs`
 - Primary language: TypeScript
 - Runtime language: JavaScript
 - Primary module format: ESM
@@ -35,7 +35,7 @@ Do not claim that GoodJS outperforms established frameworks until reproducible b
 - Initial release: `0.1.0` or another appropriate prerelease version
 - Stable release: Only after acceptance criteria are met
 
-Use `GoodJS` in branding and `goodjs` in package installation and imports.
+Use `GoodyJS` in branding and `goodyjs` in package installation and imports.
 
 Before choosing the final package metadata, check npm package-name availability, existing projects, and relevant trademarks. Do not assume that a package name or trademark is available merely because it sounds distinctive.
 
@@ -69,7 +69,7 @@ Create one framework that provides the essential functionality developers curren
 - Security defaults.
 - CLI and project scaffolding.
 
-GoodJS must allow developers to adopt only the features they need.
+GoodyJS must allow developers to adopt only the features they need.
 
 A frontend-only project must not require a server runtime. A backend-only project must not download a browser UI runtime. A middleware-only project must not require a component compiler. A complete application should be able to use the full stack with minimal configuration.
 
@@ -104,30 +104,30 @@ Optional interoperability adapters may support those ecosystems without making t
 
 # 1. STRATEGIC ARCHITECTURE
 
-Design GoodJS as a collection of interoperable packages under one coherent framework.
+Design GoodyJS as a collection of interoperable packages under one coherent framework.
 
 The following package layout is the initial target:
 
 | Package | Responsibility |
 |---|---|
-| `goodjs` | Main public API and recommended installation |
-| `@goodjs/core` | Runtime primitives and shared types |
-| `@goodjs/reactivity` | Signals, effects, computed values, and batching |
-| `@goodjs/ui` | Components, DOM rendering, and component composition |
-| `@goodjs/compiler` | Component compilation and template transformation |
-| `@goodjs/router` | Client-side and server-side routing |
-| `@goodjs/server` | HTTP server and request handling |
-| `@goodjs/middleware` | Middleware composition and reusable HTTP middleware |
-| `@goodjs/ssr` | Server-side rendering and hydration protocols |
-| `@goodjs/build` | Production build pipeline |
-| `@goodjs/dev` | Development server, file watching, and HMR |
-| `@goodjs/cli` | `good` command-line interface |
-| `@goodjs/testing` | Testing utilities and component test helpers |
-| `@goodjs/adapter-node` | Node.js deployment adapter |
-| `@goodjs/adapter-static` | Static export and deployment |
-| `@goodjs/adapter-worker` | Web-standard request handler for compatible runtimes |
-| `@goodjs/create` | Project scaffolding |
-| `@goodjs/compat` | Optional interoperability utilities |
+| `goodyjs` | Main public API and recommended installation |
+| `@goodyjs/core` | Runtime primitives and shared types |
+| `@goodyjs/reactivity` | Signals, effects, computed values, and batching |
+| `@goodyjs/ui` | Components, DOM rendering, and component composition |
+| `@goodyjs/compiler` | Component compilation and template transformation |
+| `@goodyjs/router` | Client-side and server-side routing |
+| `@goodyjs/server` | HTTP server and request handling |
+| `@goodyjs/middleware` | Middleware composition and reusable HTTP middleware |
+| `@goodyjs/ssr` | Server-side rendering and hydration protocols |
+| `@goodyjs/build` | Production build pipeline |
+| `@goodyjs/dev` | Development server, file watching, and HMR |
+| `@goodyjs/cli` | `good` command-line interface |
+| `@goodyjs/testing` | Testing utilities and component test helpers |
+| `@goodyjs/adapter-node` | Node.js deployment adapter |
+| `@goodyjs/adapter-static` | Static export and deployment |
+| `@goodyjs/adapter-worker` | Web-standard request handler for compatible runtimes |
+| `@goodyjs/create` | Project scaffolding |
+| `@goodyjs/compat` | Optional interoperability utilities |
 
 This is a target architecture, not a requirement to publish 18 packages before a working prototype exists.
 
@@ -181,14 +181,14 @@ A desired example:
 import {
   component,
   signal,
-} from "goodjs";
+} from "goodyjs";
 
 export const Counter = component(() => {
   const count = signal(0);
 
   return (
     <section>
-      <h1>GoodJS Counter</h1>
+      <h1>GoodyJS Counter</h1>
 
       <p>Count: {count()}</p>
 
@@ -433,7 +433,7 @@ For example:
 import {
   createServer,
   defineMiddleware,
-} from "goodjs";
+} from "goodyjs";
 
 const requestLogger = defineMiddleware(
   async (context, next) => {
@@ -613,7 +613,7 @@ Do not add a remote function execution mechanism merely for API elegance. It mus
 
 # 7. BUILD TOOLING AND DEVELOPMENT EXPERIENCE
 
-GoodJS must provide its own integrated development and production build experience without requiring Vite.
+GoodyJS must provide its own integrated development and production build experience without requiring Vite.
 
 It may use carefully chosen low-level build libraries internally if they provide substantial value, but the public framework must own the configuration and lifecycle.
 
@@ -678,9 +678,9 @@ Build a production pipeline supporting:
 
 Use an appropriate dependency strategy. A small number of well-chosen build dependencies is preferable to a fragile, homemade JavaScript bundler.
 
-GoodJS must not require users to install Vite, although the implementation may reuse proven low-level tooling if the architecture and licensing permit it.
+GoodyJS must not require users to install Vite, although the implementation may reuse proven low-level tooling if the architecture and licensing permit it.
 
-Document what is native to GoodJS and what is provided by internal dependencies.
+Document what is native to GoodyJS and what is provided by internal dependencies.
 
 ---
 
@@ -691,7 +691,7 @@ Create a CLI named `good`.
 The following commands are the intended interface:
 
 ```bash
-npx goodjs create my-app
+npx goodyjs create my-app
 cd my-app
 npm install
 npm run dev
@@ -839,7 +839,7 @@ The framework should offer helpful errors for:
 
 # 11. EXTENSIBILITY AND PLUGINS
 
-Build a typed plugin API that allows third parties to extend GoodJS.
+Build a typed plugin API that allows third parties to extend GoodyJS.
 
 Plugins should be able to contribute, where appropriate:
 
@@ -870,7 +870,7 @@ Create a maintainable monorepo with actual implementations, tests, and documenta
 Use the following as a starting point:
 
 ```text
-goodjs/
+goodyjs/
 ├── apps/
 │   ├── docs/
 │   ├── playground/
@@ -1075,7 +1075,7 @@ Use appropriate threat models rather than claiming that a small test suite prove
 
 ## 13.4 Performance tests
 
-Benchmark GoodJS against relevant versions of established alternatives.
+Benchmark GoodyJS against relevant versions of established alternatives.
 
 For frontend benchmarks, include appropriate comparisons with:
 
@@ -1086,7 +1086,7 @@ For frontend benchmarks, include appropriate comparisons with:
 
 For server benchmarks, include:
 
-- GoodJS.
+- GoodyJS.
 - Express.
 - Fastify or another appropriate server.
 - A minimal Node.js HTTP implementation.
@@ -1108,7 +1108,7 @@ Measure:
 
 Keep the benchmark workloads, hardware, runtime versions, dependencies, and production settings documented.
 
-Do not compare a minimal GoodJS counter against a fully featured framework application and call the result a fair benchmark.
+Do not compare a minimal GoodyJS counter against a fully featured framework application and call the result a fair benchmark.
 
 Publish raw results and scripts.
 
@@ -1187,7 +1187,7 @@ The root scripts must work from a fresh clone.
 
 Write a professional README with:
 
-1. What GoodJS is.
+1. What GoodyJS is.
 2. The problems it solves.
 3. Why it exists.
 4. Installation.
@@ -1209,14 +1209,14 @@ Write a professional README with:
 20. Roadmap.
 21. License.
 
-Do not claim to replace every competing framework in every situation. Explain where GoodJS is strong and where a mature alternative may remain more appropriate.
+Do not claim to replace every competing framework in every situation. Explain where GoodyJS is strong and where a mature alternative may remain more appropriate.
 
 Create an approachable Getting Started guide.
 
 A developer should be able to create and run a simple frontend application with minimal commands:
 
 ```bash
-npx goodjs create my-app
+npx goodyjs create my-app
 cd my-app
 npm install
 npm run dev
@@ -1225,7 +1225,7 @@ npm run dev
 A backend-only project should also be possible:
 
 ```bash
-npx goodjs create my-api --template backend
+npx goodyjs create my-api --template backend
 cd my-api
 npm install
 npm run dev
@@ -1451,5 +1451,5 @@ If a feature cannot be implemented safely or completely in the available time, r
 
 **Begin by inspecting the environment, verifying current JavaScript and browser platform capabilities, and creating the working repository. Then implement the framework in the phase order above. Do not stop after producing a plan.**
 
-The ultimate goal is a framework that developers choose because GoodJS is fast, understandable, dependable, secure, and pleasant to use—not because its documentation makes unsupported claims.
+The ultimate goal is a framework that developers choose because GoodyJS is fast, understandable, dependable, secure, and pleasant to use—not because its documentation makes unsupported claims.
 

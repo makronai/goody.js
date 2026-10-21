@@ -1,9 +1,9 @@
 import { gzipSync } from 'node:zlib';
 import esbuild from 'esbuild';
-import { signal, computed, effect, batch } from '../src/goodjs/reactivity/signal.ts';
-import { renderToString } from '../src/goodjs/ssr/ssr.ts';
-import { h } from '../src/goodjs/ui/h.ts';
-import { composeMiddleware, defineMiddleware } from '../src/goodjs/middleware/middleware.ts';
+import { signal, computed, effect, batch } from '../src/goodyjs/reactivity/signal.ts';
+import { renderToString } from '../src/goodyjs/ssr/ssr.ts';
+import { h } from '../src/goodyjs/ui/h.ts';
+import { composeMiddleware, defineMiddleware } from '../src/goodyjs/middleware/middleware.ts';
 
 async function measureBundleSizes() {
   console.log('\n============================================================');
@@ -11,7 +11,7 @@ async function measureBundleSizes() {
   console.log('============================================================');
 
   const reactivityBuild = await esbuild.build({
-    entryPoints: ['src/goodjs/reactivity/index.ts'],
+    entryPoints: ['src/goodyjs/reactivity/index.ts'],
     bundle: true,
     minify: true,
     format: 'esm',
@@ -21,7 +21,7 @@ async function measureBundleSizes() {
   const reactivityGzip = gzipSync(reactivityCode);
 
   const uiBuild = await esbuild.build({
-    entryPoints: ['src/goodjs/ui/index.ts'],
+    entryPoints: ['src/goodyjs/ui/index.ts'],
     bundle: true,
     minify: true,
     format: 'esm',
@@ -31,7 +31,7 @@ async function measureBundleSizes() {
   const uiGzip = gzipSync(uiCode);
 
   const routerBuild = await esbuild.build({
-    entryPoints: ['src/goodjs/router/index.ts'],
+    entryPoints: ['src/goodyjs/router/index.ts'],
     bundle: true,
     minify: true,
     format: 'esm',
@@ -41,7 +41,7 @@ async function measureBundleSizes() {
   const routerGzip = gzipSync(routerCode);
 
   const fullClientBuild = await esbuild.build({
-    entryPoints: ['src/goodjs/index.ts'],
+    entryPoints: ['src/goodyjs/index.ts'],
     bundle: true,
     minify: true,
     format: 'esm',
@@ -51,9 +51,9 @@ async function measureBundleSizes() {
   const fullClientCode = fullClientBuild.outputFiles[0].contents;
   const fullClientGzip = gzipSync(fullClientCode);
 
-  console.log(`- @goodjs/reactivity: ${reactivityCode.length} bytes raw | ${(reactivityGzip.length / 1024).toFixed(2)} KB gzipped (Budget: <5 KB) [PASS]`);
-  console.log(`- @goodjs/ui (+reactivity): ${uiCode.length} bytes raw | ${(uiGzip.length / 1024).toFixed(2)} KB gzipped (Budget: <8 KB) [PASS]`);
-  console.log(`- @goodjs/router: ${routerCode.length} bytes raw | ${(routerGzip.length / 1024).toFixed(2)} KB gzipped (Budget: <3 KB) [PASS]`);
+  console.log(`- @goodyjs/reactivity: ${reactivityCode.length} bytes raw | ${(reactivityGzip.length / 1024).toFixed(2)} KB gzipped (Budget: <5 KB) [PASS]`);
+  console.log(`- @goodyjs/ui (+reactivity): ${uiCode.length} bytes raw | ${(uiGzip.length / 1024).toFixed(2)} KB gzipped (Budget: <8 KB) [PASS]`);
+  console.log(`- @goodyjs/router: ${routerCode.length} bytes raw | ${(routerGzip.length / 1024).toFixed(2)} KB gzipped (Budget: <3 KB) [PASS]`);
   console.log(`- Full Client Bundle: ${fullClientCode.length} bytes raw | ${(fullClientGzip.length / 1024).toFixed(2)} KB gzipped (Budget: <15 KB) [PASS]`);
 }
 
@@ -133,7 +133,7 @@ function runReactivityBenchmarks() {
   const tree = h(
     'div',
     { class: 'dashboard' },
-    h('h1', null, 'GoodJS SSR'),
+    h('h1', null, 'GoodyJS SSR'),
     h(
       'ul',
       null,

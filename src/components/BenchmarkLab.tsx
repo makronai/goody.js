@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { signal, computed, effect, batch, renderToString, h } from '../goodjs/index.ts';
+import { signal, computed, effect, batch, renderToString, h } from '../goodyjs/index.ts';
 import { Cpu, Play, CheckCircle2, BarChart3, RefreshCw, Zap, Shield, ArrowUpRight } from 'lucide-react';
 
 interface BenchmarkResult {
@@ -95,7 +95,7 @@ export const BenchmarkLab: React.FC = () => {
     // Test 4: SSR
     await new Promise((r) => setTimeout(r, 50));
     const tree = h('div', { class: 'benchmark' },
-      h('h1', null, 'GoodJS'),
+      h('h1', null, 'GoodyJS'),
       h('ul', null, Array.from({ length: 50 }, (_, i) => h('li', { key: i }, `Row ${i}`)))
     );
     const start4 = performance.now();
@@ -140,7 +140,7 @@ export const BenchmarkLab: React.FC = () => {
   };
 
   const ecosystemSizes = [
-    { name: 'GoodJS (Reactivity + UI)', sizeKb: 2.43, barPercent: 1.7, color: 'bg-emerald-400' },
+    { name: 'GoodyJS (Reactivity + UI)', sizeKb: 2.43, barPercent: 1.7, color: 'bg-emerald-400' },
     { name: 'Solid.js (Core + Web)', sizeKb: 7.2, barPercent: 5.1, color: 'bg-cyan-400' },
     { name: 'Preact', sizeKb: 10.4, barPercent: 7.4, color: 'bg-indigo-400' },
     { name: 'Vue 3 (Runtime)', sizeKb: 33.8, barPercent: 24.1, color: 'bg-emerald-600' },
@@ -216,7 +216,7 @@ export const BenchmarkLab: React.FC = () => {
                 <p className="text-xs text-slate-400">Baseline core reactivity and component rendering layer.</p>
               </div>
               <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
-                GoodJS Budget: &lt;5 KB
+                GoodyJS Budget: &lt;5 KB
               </span>
             </div>
 
@@ -239,7 +239,7 @@ export const BenchmarkLab: React.FC = () => {
           </div>
 
           <div className="mt-6 p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-400 flex items-center justify-between">
-            <span>GoodJS UI runtime is <strong>57× smaller</strong> than React 19 + ReactDOM.</span>
+            <span>GoodyJS UI runtime is <strong>57× smaller</strong> than React 19 + ReactDOM.</span>
             <span className="text-emerald-400 font-mono font-bold">2.43 KB Total</span>
           </div>
         </div>
@@ -248,7 +248,7 @@ export const BenchmarkLab: React.FC = () => {
         <div className="lg:col-span-5 p-5 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-between">
           <div>
             <div className="pb-3 mb-4 border-b border-slate-800">
-              <h3 className="text-sm font-bold text-white">Why GoodJS Outperforms</h3>
+              <h3 className="text-sm font-bold text-white">Why GoodyJS Outperforms</h3>
               <p className="text-xs text-slate-400">Core architectural decisions that eliminate overhead.</p>
             </div>
 

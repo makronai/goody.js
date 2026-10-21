@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { matchRoutePattern, parseQuery, createRouter } from '../src/goodjs/router/router.ts';
-import { component } from '../src/goodjs/ui/component.ts';
-import { h } from '../src/goodjs/ui/h.ts';
+import { matchRoutePattern, parseQuery, createRouter } from '../src/goodyjs/router/router.ts';
+import { component } from '../src/goodyjs/ui/component.ts';
+import { h } from '../src/goodyjs/ui/h.ts';
 
 test('Router: matchRoutePattern handles exact routes', () => {
   const m1 = matchRoutePattern('/', '/');
@@ -16,10 +16,10 @@ test('Router: matchRoutePattern handles exact routes', () => {
 });
 
 test('Router: matchRoutePattern extracts dynamic parameters', () => {
-  const m = matchRoutePattern('/users/:id/posts/:slug', '/users/99/posts/goodjs-launch');
+  const m = matchRoutePattern('/users/:id/posts/:slug', '/users/99/posts/goodyjs-launch');
   assert.equal(m.match, true);
   assert.equal(m.params.id, '99');
-  assert.equal(m.params.slug, 'goodjs-launch');
+  assert.equal(m.params.slug, 'goodyjs-launch');
 });
 
 test('Router: matchRoutePattern handles wildcard segments', () => {

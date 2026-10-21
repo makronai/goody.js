@@ -14,13 +14,13 @@ export const TEMPLATES: Record<string, ProjectTemplate> = {
   frontend: {
     id: 'frontend',
     name: 'Frontend Reactive App',
-    description: 'Ultra-lightweight reactive client application with GoodJS signals and native DOM rendering.',
+    description: 'Ultra-lightweight reactive client application with GoodyJS signals and native DOM rendering.',
     files: [
       {
         path: 'package.json',
         content: JSON.stringify(
           {
-            name: 'my-goodjs-frontend',
+            name: 'my-goodyjs-frontend',
             version: '0.1.0',
             type: 'module',
             scripts: {
@@ -29,7 +29,7 @@ export const TEMPLATES: Record<string, ProjectTemplate> = {
               preview: 'good preview',
             },
             dependencies: {
-              goodjs: '^0.1.0',
+              goodyjs: '^0.1.0',
             },
           },
           null,
@@ -38,12 +38,12 @@ export const TEMPLATES: Record<string, ProjectTemplate> = {
       },
       {
         path: 'src/main.ts',
-        content: `import { render, component, signal, h } from 'goodjs';
+        content: `import { render, component, signal, h } from 'goodyjs';
 
 const Counter = component(() => {
   const count = signal(0);
   return h('div', { class: 'counter-card' },
-    h('h1', null, 'GoodJS Reactive Counter'),
+    h('h1', null, 'GoodyJS Reactive Counter'),
     h('p', null, () => \`Count: \${count()}\`),
     h('button', { onClick: () => count.update(n => n + 1) }, 'Increment')
   );
@@ -58,7 +58,7 @@ render(h(Counter, null), document.getElementById('root')!);
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GoodJS App</title>
+  <title>GoodyJS App</title>
 </head>
 <body>
   <div id="root"></div>
@@ -78,7 +78,7 @@ render(h(Counter, null), document.getElementById('root')!);
         path: 'package.json',
         content: JSON.stringify(
           {
-            name: 'my-goodjs-api',
+            name: 'my-goodyjs-api',
             version: '0.1.0',
             type: 'module',
             scripts: {
@@ -86,7 +86,7 @@ render(h(Counter, null), document.getElementById('root')!);
               dev: 'good dev',
             },
             dependencies: {
-              goodjs: '^0.1.0',
+              goodyjs: '^0.1.0',
             },
           },
           null,
@@ -95,7 +95,7 @@ render(h(Counter, null), document.getElementById('root')!);
       },
       {
         path: 'src/server.ts',
-        content: `import { createServer, securityHeaders, requestLogger, cors } from 'goodjs';
+        content: `import { createServer, securityHeaders, requestLogger, cors } from 'goodyjs';
 
 const app = createServer();
 
@@ -115,7 +115,7 @@ app.get('/api/users/:id', (ctx) => ({
 }));
 
 await app.listen({ port: 3000 });
-console.log('GoodJS API listening on http://localhost:3000');
+console.log('GoodyJS API listening on http://localhost:3000');
 `,
       },
     ],
@@ -130,7 +130,7 @@ console.log('GoodJS API listening on http://localhost:3000');
         path: 'package.json',
         content: JSON.stringify(
           {
-            name: 'my-goodjs-fullstack',
+            name: 'my-goodyjs-fullstack',
             version: '0.1.0',
             type: 'module',
             scripts: {
@@ -139,7 +139,7 @@ console.log('GoodJS API listening on http://localhost:3000');
               start: 'good start',
             },
             dependencies: {
-              goodjs: '^0.1.0',
+              goodyjs: '^0.1.0',
             },
           },
           null,
@@ -148,12 +148,12 @@ console.log('GoodJS API listening on http://localhost:3000');
       },
       {
         path: 'src/app.tsx',
-        content: `import { component, signal, h } from 'goodjs';
+        content: `import { component, signal, h } from 'goodyjs';
 
 export const App = component<{ initialCount?: number }>((props) => {
   const count = signal(props.initialCount || 0);
   return h('main', null,
-    h('h1', null, 'GoodJS Full-Stack'),
+    h('h1', null, 'GoodyJS Full-Stack'),
     h('p', null, () => \`Active Count: \${count()}\`),
     h('button', { onClick: () => count.update(n => n + 1) }, 'Step Up')
   );
@@ -162,7 +162,7 @@ export const App = component<{ initialCount?: number }>((props) => {
       },
       {
         path: 'src/server.ts',
-        content: `import { createServer, renderToString, renderToDocument, h } from 'goodjs';
+        content: `import { createServer, renderToString, renderToDocument, h } from 'goodyjs';
 import { App } from './app.tsx';
 
 const server = createServer();
@@ -170,14 +170,14 @@ const server = createServer();
 server.get('/', (ctx) => {
   const bodyHtml = renderToString(h(App, { initialCount: 42 }));
   const fullHtml = renderToDocument({
-    title: 'GoodJS Full-Stack App',
+    title: 'GoodyJS Full-Stack App',
     bodyHtml,
     initialState: { initialCount: 42 },
   });
   ctx.res.html(fullHtml);
 });
 
-server.get('/api/data', () => ({ message: 'Hello from GoodJS Full-Stack' }));
+server.get('/api/data', () => ({ message: 'Hello from GoodyJS Full-Stack' }));
 
 await server.listen({ port: 3000 });
 `,

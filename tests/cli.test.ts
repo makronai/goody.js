@@ -1,27 +1,27 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { GoodCli } from '../src/goodjs/cli/cli.ts';
-import { TEMPLATES } from '../src/goodjs/cli/templates.ts';
+import { GoodCli } from '../src/goodyjs/cli/cli.ts';
+import { TEMPLATES } from '../src/goodyjs/cli/templates.ts';
 
 test('CLI: prints help when no arguments provided', async () => {
   const cli = new GoodCli();
   const res = await cli.run([]);
   assert.equal(res.code, 0);
-  assert.ok(res.stdout.some((line) => line.includes('GoodJS CLI')));
+  assert.ok(res.stdout.some((line) => line.includes('GoodyJS CLI')));
 });
 
 test('CLI: doctor passes all health checks', async () => {
   const cli = new GoodCli();
   const res = await cli.run(['doctor']);
   assert.equal(res.code, 0);
-  assert.ok(res.stdout.some((line) => line.includes('GoodJS system health: EXCELLENT')));
+  assert.ok(res.stdout.some((line) => line.includes('GoodyJS system health: EXCELLENT')));
 });
 
 test('CLI: create scaffolds frontend template files', async () => {
   const cli = new GoodCli();
   const res = await cli.run(['create', 'my-portfolio', '--template', 'frontend']);
   assert.equal(res.code, 0);
-  assert.ok(res.stdout.some((line) => line.includes("Creating GoodJS project 'my-portfolio'")));
+  assert.ok(res.stdout.some((line) => line.includes("Creating GoodyJS project 'my-portfolio'")));
   assert.ok(res.stdout.some((line) => line.includes('my-portfolio/package.json')));
   assert.ok(res.stdout.some((line) => line.includes('my-portfolio/src/main.ts')));
 });

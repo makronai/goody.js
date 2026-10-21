@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { defineMiddleware, composeMiddleware } from '../src/goodjs/middleware/middleware.ts';
-import { securityHeaders, cors, rateLimiter } from '../src/goodjs/middleware/builtin.ts';
-import { createServer } from '../src/goodjs/server/server.ts';
+import { defineMiddleware, composeMiddleware } from '../src/goodyjs/middleware/middleware.ts';
+import { securityHeaders, cors, rateLimiter } from '../src/goodyjs/middleware/builtin.ts';
+import { createServer } from '../src/goodyjs/server/server.ts';
 
 test('Middleware: executes in onion order', async () => {
   const steps: string[] = [];

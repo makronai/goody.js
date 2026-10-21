@@ -27,7 +27,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-extrabold text-xl tracking-tight text-white">GoodJS</span>
+                <span className="font-extrabold text-xl tracking-tight text-white">GoodyJS</span>
                 <span className="px-2 py-0.5 text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full">
                   v0.1.0 Milestone
                 </span>

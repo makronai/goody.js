@@ -1,8 +1,8 @@
 {
-  "name": "goodjs",
+  "name": "goodyjs",
   "version": "0.1.0",
   "description": "A lightweight, dependency-light full-stack JavaScript framework uniting reactive UI, native HTTP server, composable middleware, SSR, and zero-config tooling.",
-  "author": "GoodJS Maintainers",
+  "author": "GoodyJS Maintainers",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.js",
@@ -68,7 +68,7 @@
     "node": ">=18.0.0"
   },
   "keywords": [
-    "goodjs",
+    "goodyjs",
     "framework",
     "full-stack",
     "reactive",

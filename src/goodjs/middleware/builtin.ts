@@ -39,7 +39,7 @@ export function requestLogger(options: LoggerOptions = {}): MiddlewareHandler {
       await next();
     } finally {
       const duration = (performance.now() - start).toFixed(2);
-      log(`[GoodJS Server] ${ctx.req.method} ${ctx.req.path} -> ${ctx.res.statusCode} (${duration}ms) [${ctx.req.requestId}]`);
+      log(`[GoodyJS Server] ${ctx.req.method} ${ctx.req.path} -> ${ctx.res.statusCode} (${duration}ms) [${ctx.req.requestId}]`);
     }
   });
 }

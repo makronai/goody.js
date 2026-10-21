@@ -1,18 +1,18 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createServer } from '../src/goodjs/server/server.ts';
+import { createServer } from '../src/goodyjs/server/server.ts';
 
 test('Server: registers GET route and simulates request', async () => {
   const app = createServer();
 
   app.get('/api/health', (ctx) => {
-    ctx.res.json({ status: 'ok', framework: 'GoodJS' });
+    ctx.res.json({ status: 'ok', framework: 'GoodyJS' });
   });
 
   const res = await app.simulateRequest('GET', '/api/health');
   assert.equal(res.status, 200);
   assert.equal(res.body.status, 'ok');
-  assert.equal(res.body.framework, 'GoodJS');
+  assert.equal(res.body.framework, 'GoodyJS');
 });
 
 test('Server: extracts path parameters and handles POST with body', async () => {
@@ -53,7 +53,7 @@ test('Server: handles query parameters and custom headers', async () => {
   const app = createServer();
 
   app.get('/api/search', (ctx) => {
-    ctx.res.header('X-Custom-Engine', 'GoodJS-Native');
+    ctx.res.header('X-Custom-Engine', 'GoodyJS-Native');
     return {
       query: ctx.req.query.q,
       page: ctx.req.query.page,
@@ -62,7 +62,7 @@ test('Server: handles query parameters and custom headers', async () => {
 
   const res = await app.simulateRequest('GET', '/api/search?q=signals&page=2');
   assert.equal(res.status, 200);
-  assert.equal(res.headers['x-custom-engine'], 'GoodJS-Native');
+  assert.equal(res.headers['x-custom-engine'], 'GoodyJS-Native');
   assert.equal(res.body.query, 'signals');
   assert.equal(res.body.page, '2');
 });

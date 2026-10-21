@@ -194,7 +194,7 @@ export function createServer(): GoodServerInstance {
           res.status(statusCode).text(responseBody || '');
         }
       } catch (err: any) {
-        console.error('[GoodJS Server] Unhandled Request Error:', err);
+        console.error('[GoodyJS Server] Unhandled Request Error:', err);
         if (!isSent) {
           res.status(500).json({
             error: 'Internal Server Error',
@@ -310,7 +310,7 @@ async function readRequestBody(rawReq: any): Promise<string> {
     rawReq.on('data', (chunk: any) => {
       data += chunk;
       if (data.length > MAX_SIZE) {
-        reject(new Error('[GoodJS Server] Payload Too Large (max 1MB)'));
+        reject(new Error('[GoodyJS Server] Payload Too Large (max 1MB)'));
       }
     });
 

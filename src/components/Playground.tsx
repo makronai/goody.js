@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { signal, computed, batch, render, h, renderToString } from '../goodjs/index.ts';
+import { signal, computed, batch, render, h, renderToString } from '../goodyjs/index.ts';
 import { Play, RotateCcw, Copy, Check, Sparkles, Layers, Eye, Code } from 'lucide-react';
 
 export const Playground: React.FC = () => {
@@ -75,7 +75,7 @@ export const Playground: React.FC = () => {
       );
 
       unmountRef.current = render(CounterVNode, containerRef.current);
-      logEvent('GoodJS Counter mounted natively into DOM');
+      logEvent('GoodyJS Counter mounted natively into DOM');
     } else if (activeDemo === 'todos') {
       interface Task {
         id: number;
@@ -87,7 +87,7 @@ export const Playground: React.FC = () => {
         { id: 1, title: 'Verify zero-dependency core', completed: true },
         { id: 2, title: 'Test fine-grained signal subscriptions', completed: true },
         { id: 3, title: 'Benchmark SSR hydration against DOM', completed: false },
-        { id: 4, title: 'Deploy GoodJS standalone service', completed: false },
+        { id: 4, title: 'Deploy GoodyJS standalone service', completed: false },
       ]);
       const filter = signal<'all' | 'active' | 'completed'>('all');
 
@@ -182,10 +182,10 @@ export const Playground: React.FC = () => {
       );
 
       unmountRef.current = render(TodoVNode, containerRef.current);
-      logEvent('GoodJS Keyed Todo Store mounted');
+      logEvent('GoodyJS Keyed Todo Store mounted');
     } else if (activeDemo === 'ssr') {
       const serverApp = h('div', { class: 'ssr-container p-4' },
-        h('h2', { class: 'text-base font-bold text-emerald-400' }, 'GoodJS Server-Side Rendered Tree'),
+        h('h2', { class: 'text-base font-bold text-emerald-400' }, 'GoodyJS Server-Side Rendered Tree'),
         h('p', { class: 'text-xs text-slate-300 mt-1' }, 'Rendered via renderToString() with hydration markers.'),
         h('div', { class: 'grid grid-cols-2 gap-2 mt-3' },
           h('div', { class: 'p-2 rounded bg-slate-900 border border-slate-800' },
@@ -202,7 +202,7 @@ export const Playground: React.FC = () => {
       const generated = renderToString(serverApp);
       setSsrOutputHtml(generated);
       containerRef.current.innerHTML = generated;
-      logEvent('GoodJS SSR HTML generated and injected into DOM');
+      logEvent('GoodyJS SSR HTML generated and injected into DOM');
     }
 
     return () => {
@@ -220,7 +220,7 @@ export const Playground: React.FC = () => {
   };
 
   const codeSnippets = {
-    counter: `import { component, signal, computed, batch, render, h } from 'goodjs';
+    counter: `import { component, signal, computed, batch, render, h } from 'goodyjs';
 
 export const Counter = component(() => {
   const count = signal(0);
@@ -247,7 +247,7 @@ export const Counter = component(() => {
 
 render(h(Counter, null), document.getElementById('root')!);`,
 
-    todos: `import { component, signal, computed, render, h } from 'goodjs';
+    todos: `import { component, signal, computed, render, h } from 'goodyjs';
 
 export const TodoApp = component(() => {
   const tasks = signal([
@@ -271,7 +271,7 @@ export const TodoApp = component(() => {
   );
 });`,
 
-    ssr: `import { createServer, renderToString, renderToDocument, h } from 'goodjs';
+    ssr: `import { createServer, renderToString, renderToDocument, h } from 'goodyjs';
 import { App } from './App.tsx';
 
 const app = createServer();
@@ -282,7 +282,7 @@ app.get('/', (ctx) => {
 
   // 2. Wrap in HTML5 document with inline state payload
   const fullHtml = renderToDocument({
-    title: 'GoodJS Server App',
+    title: 'GoodyJS Server App',
     bodyHtml,
     initialState: { user: 'Ada', timestamp: Date.now() },
     clientScriptUrl: '/client.js',
@@ -301,10 +301,10 @@ await app.listen({ port: 3000 });`,
         <div>
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-            <h2 className="text-lg font-bold text-white tracking-tight">Live GoodJS Engine Sandbox</h2>
+            <h2 className="text-lg font-bold text-white tracking-tight">Live GoodyJS Engine Sandbox</h2>
           </div>
           <p className="text-xs text-slate-400 mt-1 max-w-2xl">
-            This playground runs the compiled <code className="text-emerald-400 font-mono">goodjs</code> runtime directly in your browser.
+            This playground runs the compiled <code className="text-emerald-400 font-mono">goodyjs</code> runtime directly in your browser.
             Zero React or Vue internals are used to render or update the sandboxed components below.
           </p>
         </div>
@@ -350,7 +350,7 @@ await app.listen({ port: 3000 });`,
             <div className="px-4 py-3 bg-slate-950/70 border-b border-slate-800 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-                <span className="text-xs font-bold text-slate-200">Native GoodJS Container</span>
+                <span className="text-xs font-bold text-slate-200">Native GoodyJS Container</span>
               </div>
               <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400">
                 DOM Isolated

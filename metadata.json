@@ -1,5 +1,5 @@
 {
-  "name": "GoodJS - Full-Stack JavaScript Framework",
+  "name": "GoodyJS - Full-Stack JavaScript Framework",
   "description": "A dependency-light, full-stack JavaScript framework uniting reactive UI, native HTTP server, composable middleware, SSR, and zero-config tooling.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]

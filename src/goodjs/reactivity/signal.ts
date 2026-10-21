@@ -106,7 +106,7 @@ export function effect(run: EffectFn): CleanupFn {
         try {
           cleanupCallback();
         } catch (err) {
-          console.error('[GoodJS Reactivity] Error during effect cleanup:', err);
+          console.error('[GoodyJS Reactivity] Error during effect cleanup:', err);
         }
         cleanupCallback = undefined;
       }
@@ -133,7 +133,7 @@ export function effect(run: EffectFn): CleanupFn {
       try {
         cleanupCallback();
       } catch (err) {
-        console.error('[GoodJS Reactivity] Error disposing effect:', err);
+        console.error('[GoodyJS Reactivity] Error disposing effect:', err);
       }
       cleanupCallback = undefined;
     }
@@ -169,7 +169,7 @@ export function createRoot<T>(fn: (dispose: () => void) => T): T {
       try {
         cleanup();
       } catch (err) {
-        console.error('[GoodJS Reactivity] Error in root disposal:', err);
+        console.error('[GoodyJS Reactivity] Error in root disposal:', err);
       }
     }
     cleanups.length = 0;
@@ -202,7 +202,7 @@ function flushPendingEffects(): void {
     if (iterations > MAX_ITERATIONS) {
       pendingEffects.clear();
       throw new Error(
-        '[GoodJS Reactivity] Circular dependency or runaway reactive loop detected! Maximum batch iterations exceeded (1000).'
+        '[GoodyJS Reactivity] Circular dependency or runaway reactive loop detected! Maximum batch iterations exceeded (1000).'
       );
     }
 

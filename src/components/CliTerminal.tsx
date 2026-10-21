@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { GoodCli } from '../goodjs/cli/cli.ts';
-import { TEMPLATES } from '../goodjs/cli/templates.ts';
+import { GoodCli } from '../goodyjs/cli/cli.ts';
+import { TEMPLATES } from '../goodyjs/cli/templates.ts';
 import { Terminal, Play, FolderTree, FileCode, CheckCircle2, Copy, Check } from 'lucide-react';
 
 export const CliTerminal: React.FC = () => {
@@ -11,7 +11,7 @@ export const CliTerminal: React.FC = () => {
     {
       command: 'good doctor',
       output: [
-        '🩺 GoodJS System Doctor Audit',
+        '🩺 GoodyJS System Doctor Audit',
         '----------------------------------------------------',
         '  ✔ Node.js runtime:       v22.23.3 (Compatible >=18.0)',
         '  ✔ Core Dependencies:     0 runtime external dependencies',
@@ -21,7 +21,7 @@ export const CliTerminal: React.FC = () => {
         '  ✔ TypeScript Support:    Strict mode enabled',
         '  ✔ Security Posture:      HTML Auto-Escaping, Onion Middleware',
         '----------------------------------------------------',
-        '✨ GoodJS system health: EXCELLENT (All checks passed)',
+        '✨ GoodyJS system health: EXCELLENT (All checks passed)',
       ],
       code: 0,
     },
@@ -79,7 +79,7 @@ export const CliTerminal: React.FC = () => {
         <div>
           <div className="flex items-center gap-2">
             <Terminal className="w-5 h-5 text-indigo-400" />
-            <h2 className="text-lg font-bold text-white tracking-tight">GoodJS CLI & Scaffolding Engine</h2>
+            <h2 className="text-lg font-bold text-white tracking-tight">GoodyJS CLI & Scaffolding Engine</h2>
           </div>
           <p className="text-xs text-slate-400 mt-1 max-w-2xl">
             The official <code className="text-indigo-400 font-mono">good</code> command line interface.
@@ -89,7 +89,7 @@ export const CliTerminal: React.FC = () => {
 
         <div className="flex items-center gap-2">
           <span className="px-2.5 py-1 text-xs font-mono font-semibold bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 rounded-lg">
-            npx goodjs create
+            npx goodyjs create
           </span>
         </div>
       </div>
@@ -103,7 +103,7 @@ export const CliTerminal: React.FC = () => {
               <span className="w-3 h-3 rounded-full bg-rose-500/80 inline-block" />
               <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block" />
               <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block" />
-              <span className="ml-2 text-xs font-mono text-slate-400">bash - goodjs v0.1.0</span>
+              <span className="ml-2 text-xs font-mono text-slate-400">bash - goodyjs v0.1.0</span>
             </div>
             <button
               onClick={() => setTerminalHistory([])}

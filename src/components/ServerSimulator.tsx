@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createServer, securityHeaders, cors, rateLimiter, requestLogger, defineMiddleware } from '../goodjs/index.ts';
+import { createServer, securityHeaders, cors, rateLimiter, requestLogger, defineMiddleware } from '../goodyjs/index.ts';
 import { Server, Shield, Send, CheckCircle2, AlertTriangle, ArrowRight, Clock, Key } from 'lucide-react';
 
 export const ServerSimulator: React.FC = () => {
@@ -7,8 +7,8 @@ export const ServerSimulator: React.FC = () => {
   const [enableSecurityHeaders, setEnableSecurityHeaders] = useState(true);
   const [enableRateLimit, setEnableRateLimit] = useState(false);
   const [enableAuth, setEnableAuth] = useState(true);
-  const [authHeader, setAuthHeader] = useState('Bearer goodjs-token-123');
-  const [requestBody, setRequestBody] = useState('{\n  "title": "Ship GoodJS 0.1.0",\n  "priority": "high"\n}');
+  const [authHeader, setAuthHeader] = useState('Bearer goodyjs-token-123');
+  const [requestBody, setRequestBody] = useState('{\n  "title": "Ship GoodyJS 0.1.0",\n  "priority": "high"\n}');
 
   const [isLoading, setIsLoading] = useState(false);
   const [responseResult, setResponseResult] = useState<{
@@ -24,7 +24,7 @@ export const ServerSimulator: React.FC = () => {
   const dispatchSimulatedRequest = async () => {
     setIsLoading(true);
 
-    // Initialize GoodJS Server without Express
+    // Initialize GoodyJS Server without Express
     const app = createServer();
     const trace: string[] = [];
 
@@ -56,11 +56,11 @@ export const ServerSimulator: React.FC = () => {
     app.use(defineMiddleware(async (ctx, next) => {
       if (ctx.req.path.startsWith('/api/protected')) {
         const auth = ctx.req.headers['authorization'];
-        if (!auth || !auth.includes('goodjs-token')) {
+        if (!auth || !auth.includes('goodyjs-token')) {
           trace.push('4. [Auth] ❌ Unauthorized request blocked');
           ctx.res.status(401).json({
             error: 'Unauthorized',
-            message: 'Missing or invalid Bearer token. Use Authorization: Bearer goodjs-token-123',
+            message: 'Missing or invalid Bearer token. Use Authorization: Bearer goodyjs-token-123',
           });
           return;
         }
@@ -75,7 +75,7 @@ export const ServerSimulator: React.FC = () => {
       return {
         status: 'healthy',
         timestamp: new Date().toISOString(),
-        framework: 'GoodJS Server (Native Node HTTP Primitives)',
+        framework: 'GoodyJS Server (Native Node HTTP Primitives)',
         dependencies: 0,
         uptimeSeconds: 42.18,
       };
@@ -86,7 +86,7 @@ export const ServerSimulator: React.FC = () => {
       return [
         { id: 'task-1', title: 'Verify Fine-Grained Signals', status: 'completed' },
         { id: 'task-2', title: 'Zero-Config SSR Hydration Markers', status: 'completed' },
-        { id: 'task-3', title: 'Publish goodjs v0.1.0 to npm', status: 'in-progress' },
+        { id: 'task-3', title: 'Publish goodyjs v0.1.0 to npm', status: 'in-progress' },
       ];
     });
 
@@ -106,7 +106,7 @@ export const ServerSimulator: React.FC = () => {
       trace.push('5. [Route] Handled GET /api/protected/profile');
       return {
         userId: 'usr_8829',
-        username: 'goodjs_architect',
+        username: 'goodyjs_architect',
         role: 'system_admin',
         capabilities: ['deploy', 'publish', 'audit'],
       };
@@ -173,7 +173,7 @@ export const ServerSimulator: React.FC = () => {
         <div>
           <div className="flex items-center gap-2">
             <Server className="w-5 h-5 text-cyan-400" />
-            <h2 className="text-lg font-bold text-white tracking-tight">Independent GoodJS Backend Server</h2>
+            <h2 className="text-lg font-bold text-white tracking-tight">Independent GoodyJS Backend Server</h2>
           </div>
           <p className="text-xs text-slate-400 mt-1 max-w-2xl">
             A standalone HTTP runtime using standard Node.js <code className="text-cyan-400 font-mono">http</code> without Express.

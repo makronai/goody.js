@@ -49,7 +49,7 @@ export class GoodCli {
       case 'version':
       case '-v':
       case '--version':
-        this.log('goodjs v0.1.0 (release candidate)');
+        this.log('goodyjs v0.1.0 (release candidate)');
         break;
       case 'help':
       default:
@@ -65,7 +65,7 @@ export class GoodCli {
   }
 
   private async handleCreate(args: string[]) {
-    const projectName = args[0] || 'my-goodjs-app';
+    const projectName = args[0] || 'my-goodyjs-app';
     let templateId = 'frontend';
 
     const tplFlagIndex = args.indexOf('--template');
@@ -75,7 +75,7 @@ export class GoodCli {
 
     const template = TEMPLATES[templateId] || TEMPLATES.frontend;
 
-    this.log(`✨ Creating GoodJS project '${projectName}' using '${template.name}'...`);
+    this.log(`✨ Creating GoodyJS project '${projectName}' using '${template.name}'...`);
     this.log(`📦 Generating ${template.files.length} project files:`);
 
     for (const f of template.files) {
@@ -90,7 +90,7 @@ export class GoodCli {
   }
 
   private handleDev() {
-    this.log('🚀 GoodJS Dev Server v0.1.0');
+    this.log('🚀 GoodyJS Dev Server v0.1.0');
     this.log('⚡ Zero-config live reload active');
     this.log('📡 Local:   http://localhost:3000/');
     this.log('📊 Memory:  ~14.2 MB RSS');
@@ -98,7 +98,7 @@ export class GoodCli {
   }
 
   private handleBuild() {
-    this.log('📦 GoodJS Production Bundler');
+    this.log('📦 GoodyJS Production Bundler');
     this.log('🔍 Analyzing entry points...');
     this.log('⚡ Compiling reactive components and route graphs...');
     this.log('✅ Generated artifacts:');
@@ -109,13 +109,13 @@ export class GoodCli {
   }
 
   private handleStart() {
-    this.log('🌐 GoodJS Production Server');
+    this.log('🌐 GoodyJS Production Server');
     this.log('⚡ Ready on http://0.0.0.0:3000');
     this.log('🛡️ Security headers active (Strict CSP, Nosniff, HSTS)');
   }
 
   private handleDoctor() {
-    this.log('🩺 GoodJS System Doctor Audit');
+    this.log('🩺 GoodyJS System Doctor Audit');
     this.log('----------------------------------------------------');
     this.log('  ✔ Node.js runtime:       v22.23.3 (Compatible >=18.0)');
     this.log('  ✔ Core Dependencies:     0 runtime external dependencies');
@@ -125,11 +125,11 @@ export class GoodCli {
     this.log('  ✔ TypeScript Support:    Strict mode enabled');
     this.log('  ✔ Security Posture:      HTML Auto-Escaping, Onion Middleware');
     this.log('----------------------------------------------------');
-    this.log('✨ GoodJS system health: EXCELLENT (All checks passed)');
+    this.log('✨ GoodyJS system health: EXCELLENT (All checks passed)');
   }
 
   private handleRoutes() {
-    this.log('🗺️ Discovered GoodJS Route Manifest:');
+    this.log('🗺️ Discovered GoodyJS Route Manifest:');
     this.log('  GET    /                     (Page Component: Home)');
     this.log('  GET    /about                (Page Component: About)');
     this.log('  GET    /blog/:slug           (Page Component: BlogPost, dynamic)');
@@ -139,14 +139,14 @@ export class GoodCli {
   }
 
   private handleCheck() {
-    this.log('🔎 Running GoodJS static type and capability checks...');
+    this.log('🔎 Running GoodyJS static type and capability checks...');
     this.log('✔ Type definitions verified.');
     this.log('✔ Zero React/Vue/Express/Vite dependencies detected in core.');
     this.log('✨ Codebase clean and ready for release.');
   }
 
   private handleHelp() {
-    this.log('GoodJS CLI - The Lightweight Full-Stack JavaScript Framework');
+    this.log('GoodyJS CLI - The Lightweight Full-Stack JavaScript Framework');
     this.log('Usage: good <command> [options]');
     this.log('');
     this.log('Commands:');

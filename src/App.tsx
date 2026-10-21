@@ -1,6 +1,6 @@
 /**
  * @license MIT
- * GoodJS Official Showcase & Developer Workbench
+ * GoodyJS Official Showcase & Developer Workbench
  */
 
 import React, { useState } from 'react';
@@ -36,7 +36,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-            <span>GoodJS v0.1.0 Stable Milestone • Zero-Dependency Full-Stack Core</span>
+            <span>GoodyJS v0.1.0 Stable Milestone • Zero-Dependency Full-Stack Core</span>
           </div>
 
           <div className="flex items-center gap-4 text-[11px]">

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { h, Fragment, isVNode } from '../src/goodjs/ui/h.ts';
-import { component } from '../src/goodjs/ui/component.ts';
+import { h, Fragment, isVNode } from '../src/goodyjs/ui/h.ts';
+import { component } from '../src/goodyjs/ui/component.ts';
 
 test('UI: h() creates valid VNode with props and children', () => {
   const node = h('div', { id: 'test', class: 'container' }, 'Hello', 'World');

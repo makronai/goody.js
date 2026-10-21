@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { signal, computed, effect, batch, untrack, createRoot } from '../src/goodjs/reactivity/signal.ts';
+import { signal, computed, effect, batch, untrack, createRoot } from '../src/goodyjs/reactivity/signal.ts';
 
 test('Reactivity: signal reading, writing, and updating', () => {
   const count = signal(10);
@@ -35,22 +35,22 @@ test('Reactivity: computed derives value and memoizes properly', () => {
 });
 
 test('Reactivity: effect auto-tracks dependencies and executes on change', () => {
-  const name = signal('GoodJS');
+  const name = signal('GoodyJS');
   const runs: string[] = [];
 
   const dispose = effect(() => {
     runs.push(name());
   });
 
-  assert.deepEqual(runs, ['GoodJS']);
+  assert.deepEqual(runs, ['GoodyJS']);
 
-  name.set('GoodJS v0.1');
-  assert.deepEqual(runs, ['GoodJS', 'GoodJS v0.1']);
+  name.set('GoodyJS v0.1');
+  assert.deepEqual(runs, ['GoodyJS', 'GoodyJS v0.1']);
 
   dispose();
 
-  name.set('GoodJS v0.2');
-  assert.deepEqual(runs, ['GoodJS', 'GoodJS v0.1']);
+  name.set('GoodyJS v0.2');
+  assert.deepEqual(runs, ['GoodyJS', 'GoodyJS v0.1']);
 });
 
 test('Reactivity: effect runs cleanup before next execution and on dispose', () => {

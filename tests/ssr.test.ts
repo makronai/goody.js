@@ -1,9 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { renderToString, escapeHtml, renderToDocument } from '../src/goodjs/ssr/ssr.ts';
-import { h } from '../src/goodjs/ui/h.ts';
-import { signal } from '../src/goodjs/reactivity/signal.ts';
-import { component } from '../src/goodjs/ui/component.ts';
+import { renderToString, escapeHtml, renderToDocument } from '../src/goodyjs/ssr/ssr.ts';
+import { h } from '../src/goodyjs/ui/h.ts';
+import { signal } from '../src/goodyjs/reactivity/signal.ts';
+import { component } from '../src/goodyjs/ui/component.ts';
 
 test('SSR: escapeHtml protects against script and tag injection', () => {
   const unsafe = '<script>alert("xss")</script>&"\'';
@@ -13,13 +13,13 @@ test('SSR: escapeHtml protects against script and tag injection', () => {
 
 test('SSR: renderToString produces HTML with hydration markers', () => {
   const vnode = h('div', { class: 'card', id: 'app' },
-    h('h1', null, 'Welcome to GoodJS'),
+    h('h1', null, 'Welcome to GoodyJS'),
     h('p', null, 'Zero dependencies.')
   );
 
   const html = renderToString(vnode);
   assert.ok(html.includes('<div data-good-id="g-1" class="card" id="app">'));
-  assert.ok(html.includes('<h1 data-good-id="g-2">Welcome to GoodJS</h1>'));
+  assert.ok(html.includes('<h1 data-good-id="g-2">Welcome to GoodyJS</h1>'));
   assert.ok(html.includes('<p data-good-id="g-3">Zero dependencies.</p>'));
 });
 
@@ -44,7 +44,7 @@ test('SSR: handles void elements properly', () => {
 
 test('SSR: renderToDocument wraps output in valid HTML5 document with state', () => {
   const doc = renderToDocument({
-    title: 'GoodJS Showcase',
+    title: 'GoodyJS Showcase',
     meta: [{ name: 'description', content: 'Ultra-lightweight framework' }],
     bodyHtml: '<h1 data-good-id="g-1">Hello SSR</h1>',
     initialState: { user: 'developer' },
@@ -52,7 +52,7 @@ test('SSR: renderToDocument wraps output in valid HTML5 document with state', ()
   });
 
   assert.ok(doc.startsWith('<!doctype html>'));
-  assert.ok(doc.includes('<title>GoodJS Showcase</title>'));
+  assert.ok(doc.includes('<title>GoodyJS Showcase</title>'));
   assert.ok(doc.includes('<meta name="description" content="Ultra-lightweight framework" />'));
   assert.ok(doc.includes('<div id="root"><h1 data-good-id="g-1">Hello SSR</h1></div>'));
   assert.ok(doc.includes('id="__GOODJS_STATE__"'));

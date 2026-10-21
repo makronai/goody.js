@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { signal, computed, effect, createRoot } from '../goodjs/index.ts';
+import { signal, computed, effect, createRoot } from '../goodyjs/index.ts';
 import { Activity, Zap, CheckCircle2, RefreshCw, Trash2, ShieldAlert } from 'lucide-react';
 
 export const GraphInspector: React.FC = () => {
@@ -54,7 +54,7 @@ export const GraphInspector: React.FC = () => {
             <h2 className="text-lg font-bold text-white tracking-tight">Fine-Grained Reactive Dependency Graph</h2>
           </div>
           <p className="text-xs text-slate-400 mt-1 max-w-2xl">
-            Visual inspection of GoodJS signals, memoized computed derivations, and automatic subscriber disposal.
+            Visual inspection of GoodyJS signals, memoized computed derivations, and automatic subscriber disposal.
             When a signal value writes, only dependent nodes recalculate — zero full-tree VDOM diffing.
           </p>
         </div>

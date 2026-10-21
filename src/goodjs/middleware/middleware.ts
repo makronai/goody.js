@@ -14,7 +14,7 @@ export function composeMiddleware<State = Record<string, any>>(
 
     function dispatch(i: number): Promise<void> {
       if (i <= index) {
-        return Promise.reject(new Error('[GoodJS Middleware] next() called multiple times in a single middleware!'));
+        return Promise.reject(new Error('[GoodyJS Middleware] next() called multiple times in a single middleware!'));
       }
       index = i;
 

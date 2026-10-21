@@ -1,6 +1,6 @@
 import type { ChildValue, ComponentFn, VNode, VNodeProps } from './types.ts';
 
-export const Fragment = Symbol('GoodJS.Fragment');
+export const Fragment = Symbol('GoodyJS.Fragment');
 
 export function h(
   tag: string | ComponentFn | symbol,

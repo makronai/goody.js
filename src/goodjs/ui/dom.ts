@@ -34,7 +34,7 @@ export function render(vnode: VNodeChild, container: HTMLElement | DocumentFragm
       try {
         mountFn();
       } catch (err) {
-        console.error('[GoodJS UI] Error in onMount hook:', err);
+        console.error('[GoodyJS UI] Error in onMount hook:', err);
       }
     }
 
@@ -51,7 +51,7 @@ export function render(vnode: VNodeChild, container: HTMLElement | DocumentFragm
       try {
         c();
       } catch (e) {
-        console.error('[GoodJS UI] Error during unmount:', e);
+        console.error('[GoodyJS UI] Error during unmount:', e);
       }
     }
   };
@@ -69,7 +69,7 @@ function mountChild(
   isSvg = false
 ): RenderResult {
   if (child === null || child === undefined || typeof child === 'boolean') {
-    const comment = document.createComment('goodjs-empty');
+    const comment = document.createComment('goodyjs-empty');
     return {
       node: comment,
       unmount: () => {
@@ -89,7 +89,7 @@ function mountChild(
   }
 
   if (typeof child === 'function') {
-    const marker = document.createComment('goodjs-reactive');
+    const marker = document.createComment('goodyjs-reactive');
     let currentNode: Node = marker;
     let childUnmount: (() => void) | null = null;
 
@@ -101,7 +101,7 @@ function mountChild(
       }
 
       if (val === null || val === undefined || typeof val === 'boolean') {
-        const nextNode = document.createComment('goodjs-empty');
+        const nextNode = document.createComment('goodyjs-empty');
         if (currentNode.parentNode) {
           currentNode.parentNode.replaceChild(nextNode, currentNode);
         }
@@ -207,7 +207,7 @@ function mountChild(
             try {
               c();
             } catch (err) {
-              console.error('[GoodJS Component] Cleanup error:', err);
+              console.error('[GoodyJS Component] Cleanup error:', err);
             }
           }
           rendered.unmount();
