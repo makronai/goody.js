@@ -1,6 +1,6 @@
 {
   "name": "goodyjs",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "A lightweight, zero-dependency full-stack JavaScript framework uniting reactive UI, native HTTP server, composable middleware, SSR, and zero-config tooling.",
   "author": "dwmk",
   "license": "MIT",
