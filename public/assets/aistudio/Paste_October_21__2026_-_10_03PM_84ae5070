@@ -1,0 +1,1455 @@
+# MASTER ENGINEERING PROMPT: GOODJS
+## Build a New, Dependency-Light, Full-Stack JavaScript Framework from Zero to Public npm Release
+
+Act as a Principal Staff Engineer, Distinguished Software Architect, JavaScript Runtime Engineer, Compiler Engineer, Browser Rendering Specialist, Security Engineer, Performance Engineer, and Open-Source Project Maintainer.
+
+Your mission is to design, implement, test, document, benchmark, and prepare a new open-source JavaScript/TypeScript framework called **GoodJS**.
+
+The framework must be designed to compete with React, Vue, Next.js, Express, and Vite by providing a coherent, lightweight alternative that can replace several separate tools in a single project.
+
+This is not a request for a proposal, a landing page, a proof-of-concept, or a superficial wrapper around existing frameworks.
+
+**Build the actual framework.** Create the source files, implement the runtime, write the compiler and development tooling, run tests, verify production builds, generate documentation, and prepare the package for a public npm release.
+
+When repository and terminal access are available, make changes directly in the workspace. If an environment cannot create files or execute commands, provide complete, copy-pasteable files and clearly distinguish implemented work from work that could not be executed or verified.
+
+Do not claim that GoodJS outperforms established frameworks until reproducible benchmarks demonstrate it.
+
+---
+
+# 0. PROJECT IDENTITY AND NAMING
+
+## 0.1 Official identity
+
+- Brand: GoodJS
+- npm package name: `goodjs`
+- CLI command: `good`
+- Repository name: `goodjs`
+- Primary language: TypeScript
+- Runtime language: JavaScript
+- Primary module format: ESM
+- Additional module format: CommonJS where practical and verified
+- License: MIT, subject to final legal and dependency review
+- Initial target: Node.js and modern browsers
+- Architecture: Modular, full-stack, dependency-light, capability-driven
+- Initial release: `0.1.0` or another appropriate prerelease version
+- Stable release: Only after acceptance criteria are met
+
+Use `GoodJS` in branding and `goodjs` in package installation and imports.
+
+Before choosing the final package metadata, check npm package-name availability, existing projects, and relevant trademarks. Do not assume that a package name or trademark is available merely because it sounds distinctive.
+
+## 0.2 Mission
+
+Create one framework that provides the essential functionality developers currently assemble from multiple libraries:
+
+- Frontend UI rendering.
+- Fine-grained reactive state.
+- Component composition.
+- Client-side routing.
+- Server-side rendering.
+- Static site generation.
+- Hydration and progressive enhancement.
+- Full-stack routing.
+- HTTP server and middleware.
+- API endpoints.
+- Server actions and remote procedure calls where appropriately designed.
+- File-based routing.
+- Data loading and mutation.
+- Request validation.
+- Error boundaries and error handling.
+- Asset management.
+- CSS and JavaScript bundling.
+- Development server.
+- Hot Module Replacement.
+- Production optimization.
+- Testing utilities.
+- TypeScript support.
+- Deployment adapters.
+- Security defaults.
+- CLI and project scaffolding.
+
+GoodJS must allow developers to adopt only the features they need.
+
+A frontend-only project must not require a server runtime. A backend-only project must not download a browser UI runtime. A middleware-only project must not require a component compiler. A complete application should be able to use the full stack with minimal configuration.
+
+## 0.3 Product principles
+
+1. Small core, optional capabilities.
+2. Native TypeScript support.
+3. Standards-based web APIs wherever possible.
+4. Minimal runtime overhead.
+5. Predictable rendering and state updates.
+6. Secure defaults.
+7. Excellent developer experience.
+8. Explicit server/client boundaries.
+9. No mandatory React or Vue dependency.
+10. No mandatory Express dependency.
+11. No mandatory Vite dependency.
+12. No unnecessary runtime dependencies.
+13. Modular packages with clear ownership.
+14. Measurable performance.
+15. Backward compatibility once stable.
+16. Accessibility by default.
+17. Useful documentation and migration guides.
+18. No fake features or untested compatibility claims.
+
+Do not use React as the renderer, Vue as the reactivity engine, Express as the HTTP server, or Vite as the mandatory development/build tool.
+
+You may study their public architecture and established web standards. Do not copy proprietary code or violate licenses.
+
+Optional interoperability adapters may support those ecosystems without making them core dependencies.
+
+---
+
+# 1. STRATEGIC ARCHITECTURE
+
+Design GoodJS as a collection of interoperable packages under one coherent framework.
+
+The following package layout is the initial target:
+
+| Package | Responsibility |
+|---|---|
+| `goodjs` | Main public API and recommended installation |
+| `@goodjs/core` | Runtime primitives and shared types |
+| `@goodjs/reactivity` | Signals, effects, computed values, and batching |
+| `@goodjs/ui` | Components, DOM rendering, and component composition |
+| `@goodjs/compiler` | Component compilation and template transformation |
+| `@goodjs/router` | Client-side and server-side routing |
+| `@goodjs/server` | HTTP server and request handling |
+| `@goodjs/middleware` | Middleware composition and reusable HTTP middleware |
+| `@goodjs/ssr` | Server-side rendering and hydration protocols |
+| `@goodjs/build` | Production build pipeline |
+| `@goodjs/dev` | Development server, file watching, and HMR |
+| `@goodjs/cli` | `good` command-line interface |
+| `@goodjs/testing` | Testing utilities and component test helpers |
+| `@goodjs/adapter-node` | Node.js deployment adapter |
+| `@goodjs/adapter-static` | Static export and deployment |
+| `@goodjs/adapter-worker` | Web-standard request handler for compatible runtimes |
+| `@goodjs/create` | Project scaffolding |
+| `@goodjs/compat` | Optional interoperability utilities |
+
+This is a target architecture, not a requirement to publish 18 packages before a working prototype exists.
+
+Start with a small number of internal modules and split packages when real dependency boundaries justify doing so.
+
+Use a monorepo with npm workspaces or another lightweight, well-supported workspace strategy. Avoid introducing an elaborate build system merely to manage a small project.
+
+## 1.1 Layer boundaries
+
+Establish these boundaries:
+
+**Core:** Types, errors, configuration, environment detection, shared utilities.
+
+**Reactivity:** Signals, effects, dependency tracking, scheduling, cleanup.
+
+**UI:** Components, DOM operations, events, attributes, lists, lifecycle.
+
+**Compiler:** Parsing, validation, transformation, source maps, diagnostics.
+
+**Router:** Route matching, parameters, navigation, loading, error handling.
+
+**Server:** HTTP primitives, middleware, routing, body parsing, response handling.
+
+**SSR:** HTML generation, escaping, server rendering, hydration markers, serialization.
+
+**Build:** Module graph, dependency resolution, CSS processing, code splitting, optimization, output manifests.
+
+**Dev:** Development server, file watching, error overlays, HMR.
+
+**Full stack:** Shared route definitions, loaders, actions, server/client code separation, serialization, deployment.
+
+No layer should import the entire framework when it needs only a small lower-level module.
+
+Avoid circular dependencies. Define the dependency graph and enforce it through automated checks.
+
+---
+
+# 2. THE GOODJS COMPONENT AND UI SYSTEM
+
+Build a native UI system rather than wrapping React or Vue.
+
+The goal is a simple programming model, small browser output, and predictable updates.
+
+## 2.1 Component model
+
+Design a concise component API with TypeScript inference and ergonomic composition.
+
+A desired example:
+
+```tsx
+import {
+  component,
+  signal,
+} from "goodjs";
+
+export const Counter = component(() => {
+  const count = signal(0);
+
+  return (
+    <section>
+      <h1>GoodJS Counter</h1>
+
+      <p>Count: {count()}</p>
+
+      <button onClick={() => count.update(n => n + 1)}>
+        Increment
+      </button>
+    </section>
+  );
+});
+```
+
+This example describes the desired API, not an excuse to omit the compiler or JSX runtime required to make it work.
+
+Implement and document the actual JSX or alternative template transformation strategy.
+
+Support TSX and JSX if selected. If a template language is introduced, keep its syntax small and provide good diagnostics.
+
+The component API must support:
+
+- Typed props.
+- Children and composition.
+- Conditional rendering.
+- Lists and keyed lists.
+- Event handlers.
+- Reactive attributes.
+- Lifecycle hooks or an equally clear lifecycle model.
+- Component cleanup.
+- Error propagation.
+- Accessibility-friendly output.
+- Custom elements or integration with Web Components where practical.
+
+## 2.2 Reactive primitives
+
+Implement:
+
+```ts
+signal<T>(initialValue: T)
+computed<T>(derive: () => T)
+effect(run: () => void | (() => void))
+batch(run: () => void)
+```
+
+Provide a deliberate API for reading and updating signals.
+
+Choose a consistent strategy for:
+
+- Dependency tracking.
+- Nested computations.
+- Effect cleanup.
+- Scheduling.
+- Batching.
+- Error propagation.
+- Disposal.
+- Re-entrant updates.
+- Circular reactive dependencies.
+
+Avoid memory leaks caused by retained effects or subscriptions.
+
+Write tests for dependency tracking, computed invalidation, effect ordering, cleanup, and batched updates.
+
+Do not use arbitrary polling or repeated full-tree rendering as the core reactivity mechanism.
+
+## 2.3 DOM rendering
+
+Implement native DOM operations with efficient updates.
+
+Requirements:
+
+- Create, update, move, and remove nodes correctly.
+- Reconcile keyed lists efficiently.
+- Update only the affected reactive regions where practical.
+- Avoid unnecessary re-creation of event handlers.
+- Remove listeners during cleanup.
+- Avoid unsafe HTML insertion by default.
+- Escape untrusted text.
+- Provide an explicit, documented unsafe HTML escape hatch.
+- Support SVG elements and attributes.
+- Handle controlled and uncontrolled form inputs predictably.
+- Preserve focus and user input during updates where possible.
+
+Benchmark both initial rendering and repeated updates.
+
+## 2.4 Accessibility
+
+Provide accessible defaults and documentation for:
+
+- Semantic HTML.
+- Labels and form controls.
+- Keyboard interaction.
+- Focus management.
+- Navigation announcements where needed.
+- Accessible dialogs and menus.
+- Reduced-motion preferences.
+- ARIA attributes when appropriate.
+
+Do not imply that using a framework automatically makes an application accessible. Provide practical tools and tests.
+
+---
+
+# 3. COMPILER AND COMPONENT TRANSFORMATION
+
+A modern framework requires a well-defined transformation pipeline.
+
+Build a compiler that supports the selected component syntax and produces correct JavaScript and source maps.
+
+## 3.1 Compiler pipeline
+
+Implement the following stages:
+
+1. Source loading.
+2. Parsing.
+3. Syntax and semantic validation.
+4. Component and template analysis.
+5. Reactive dependency analysis where applicable.
+6. Server/client boundary analysis.
+7. JavaScript transformation.
+8. CSS extraction and asset reference collection.
+9. Source map generation.
+10. Diagnostics and error reporting.
+
+Prefer a proven parser or compiler frontend when implementing a parser from scratch would be unnecessary, unsafe, or too expensive.
+
+The project can be dependency-light without reinventing TypeScript's parser.
+
+If a compiler dependency is needed, make it a development/build dependency rather than an unnecessary browser runtime dependency.
+
+## 3.2 Compiler features
+
+Support:
+
+- TypeScript and JavaScript.
+- TSX and JSX if included in the public design.
+- Component syntax transformation.
+- Development-only diagnostics.
+- Dead-code elimination compatibility.
+- CSS and static asset imports.
+- Source maps.
+- Environment-specific output.
+- Development and production compilation.
+- Useful line and column diagnostics.
+
+Add compiler fixtures for valid and invalid inputs.
+
+Do not ship a compiler that only works for the example counter.
+
+---
+
+# 4. FRONTEND ROUTER
+
+Implement a native router that can operate in browser-only, server-only, and full-stack applications.
+
+## 4.1 Routing capabilities
+
+Support:
+
+- Declarative routes.
+- File-based routes.
+- Nested layouts.
+- Dynamic parameters.
+- Optional and catch-all segments.
+- Query parameters.
+- Navigation.
+- History management.
+- Route loaders.
+- Route actions.
+- Route-level error handling.
+- Not-found handling.
+- Redirects.
+- Lazy route loading.
+- Route metadata.
+- Navigation cancellation.
+- Pending and loading states.
+
+Provide both programmatic and file-based routing, with one clearly documented recommended approach.
+
+## 4.2 Example routing conventions
+
+Use an easy-to-understand structure such as:
+
+```text
+src/
+├── routes/
+│   ├── layout.tsx
+│   ├── index.tsx
+│   ├── about.tsx
+│   ├── blog/
+│   │   ├── index.tsx
+│   │   └── [slug].tsx
+│   └── api/
+│       └── health.ts
+├── components/
+├── lib/
+└── styles/
+```
+
+The route discovery implementation must match the conventions actually documented.
+
+Define how route files export their page component, metadata, loader, action, and configuration.
+
+Test route precedence, conflicting paths, encoded parameters, trailing slashes, and not-found behavior.
+
+---
+
+# 5. BACKEND SERVER AND MIDDLEWARE
+
+Build an independent backend runtime that does not depend on Express.
+
+## 5.1 HTTP server
+
+Use standard Request and Response APIs where they fit, with a Node.js adapter that uses the Node runtime appropriately.
+
+Support:
+
+- GET, POST, PUT, PATCH, DELETE, OPTIONS, and HEAD.
+- URL and query parsing.
+- Route parameters.
+- JSON responses.
+- Text and HTML responses.
+- Redirects.
+- Cookies.
+- Request bodies.
+- Multipart forms where appropriate.
+- Streaming responses.
+- Server-sent events.
+- Request cancellation.
+- Request IDs.
+- Error handling.
+- Graceful shutdown.
+- Configurable timeouts.
+- Body size limits.
+- Route-level middleware.
+
+Do not load the frontend renderer when starting a backend-only service.
+
+## 5.2 Middleware contract
+
+Implement an explicit, typed middleware API.
+
+For example:
+
+```ts
+import {
+  createServer,
+  defineMiddleware,
+} from "goodjs";
+
+const requestLogger = defineMiddleware(
+  async (context, next) => {
+    const started = performance.now();
+
+    try {
+      return await next();
+    } finally {
+      context.logger.info({
+        method: context.request.method,
+        path: new URL(context.request.url).pathname,
+        durationMs: performance.now() - started,
+      });
+    }
+  },
+);
+
+const app = createServer();
+
+app.use(requestLogger);
+
+app.get("/api/health", () => ({
+  status: "ok",
+}));
+
+await app.listen({ port: 3000 });
+```
+
+Refine the public API so that it correctly supports response conversion, errors, headers, and context typing.
+
+Implement:
+
+- Ordered middleware execution.
+- Request context.
+- Error middleware.
+- Route-specific middleware.
+- Middleware composition.
+- Cancellation.
+- Response finalization.
+- Typed application state.
+
+Ensure middleware cannot accidentally call `next()` multiple times or create an infinite execution cycle.
+
+## 5.3 Security and HTTP correctness
+
+Include protections or safe configuration guidance for:
+
+- Request body size limits.
+- Header validation.
+- Cookie flags.
+- CORS.
+- CSRF.
+- XSS.
+- Clickjacking.
+- Content Security Policy.
+- Security headers.
+- Path traversal.
+- Request smuggling risks.
+- Host-header validation.
+- Proxy configuration.
+- Rate limiting hooks.
+- Input validation.
+- Authentication and authorization middleware.
+- SSRF in applications that make outbound requests.
+
+Do not claim that a generic middleware implementation automatically solves every security issue.
+
+Document which protections are built in, which are configurable, and which remain application responsibilities.
+
+---
+
+# 6. FULL-STACK ROUTES, SERVER RENDERING, AND HYDRATION
+
+The full-stack experience should combine the UI runtime, router, and backend without forcing developers to maintain separate frameworks.
+
+## 6.1 Rendering modes
+
+Support these modes:
+
+1. Client-side rendering.
+2. Server-side rendering.
+3. Static site generation.
+4. Incremental or on-demand regeneration if the architecture can support it reliably.
+5. Streaming server rendering where supported.
+6. Progressive enhancement for form and navigation flows.
+
+Clearly document which rendering modes are implemented in each release.
+
+## 6.2 Server/client boundaries
+
+Establish a reliable model for server-only and browser-only modules.
+
+Provide a mechanism to prevent server secrets, database drivers, and privileged modules from entering browser bundles.
+
+Design clear conventions such as:
+
+- `*.server.ts`
+- `*.client.ts`
+- Server-only route loaders.
+- Client-only lifecycle hooks.
+- Explicit serialization of data crossing the server/client boundary.
+
+Reject invalid imports at build time when practical.
+
+Never rely solely on a naming convention to protect secrets if the bundler can verify module boundaries.
+
+## 6.3 Server-side rendering
+
+Implement:
+
+- HTML serialization.
+- Context propagation.
+- Proper escaping.
+- Request-scoped data.
+- Metadata and head management.
+- Error rendering.
+- Streaming where supported.
+- Hydration markers.
+- Stable IDs.
+- Mismatch diagnostics.
+- Resource and subscription cleanup.
+
+The renderer must be deterministic enough that server-generated HTML and the client hydration process can agree on the initial UI.
+
+Test concurrent requests to ensure one user's state or data cannot leak into another request.
+
+## 6.4 Data loaders and actions
+
+Provide typed loader and action interfaces.
+
+Example:
+
+```ts
+export async function loader({ params, request }) {
+  const product = await getProduct(params.id);
+
+  if (!product) {
+    throw new Response("Not found", { status: 404 });
+  }
+
+  return { product };
+}
+```
+
+Support:
+
+- Route parameters.
+- Query parameters.
+- Request cancellation.
+- Error and redirect responses.
+- Data serialization.
+- Validation.
+- Authentication checks.
+- Mutation responses.
+- Cache policies.
+- Revalidation where implemented.
+
+Treat all remote input as untrusted.
+
+## 6.5 Server actions and remote calls
+
+If server actions are implemented, establish:
+
+- Explicit action identifiers.
+- Input validation.
+- Authentication and authorization.
+- CSRF protection.
+- Safe serialization.
+- Request-size limits.
+- Error conversion.
+- No arbitrary function invocation from user-supplied identifiers.
+- No exposure of server-only code in browser bundles.
+
+Do not add a remote function execution mechanism merely for API elegance. It must be secure, inspectable, and well tested.
+
+---
+
+# 7. BUILD TOOLING AND DEVELOPMENT EXPERIENCE
+
+GoodJS must provide its own integrated development and production build experience without requiring Vite.
+
+It may use carefully chosen low-level build libraries internally if they provide substantial value, but the public framework must own the configuration and lifecycle.
+
+## 7.1 Development server
+
+Implement:
+
+- Local development server.
+- File watching.
+- Fast rebuilds.
+- Error overlays.
+- HMR.
+- Source map support.
+- Environment configuration.
+- Route discovery.
+- Dependency invalidation.
+- CSS updates.
+- TypeScript compilation.
+- Clear startup and error messages.
+
+Use native ESM serving where appropriate, but do not assume that browser-native modules eliminate the need for dependency resolution or production bundling.
+
+Avoid restarting the entire server on every file edit unless that is the explicitly documented fallback for a particular module.
+
+## 7.2 Hot Module Replacement
+
+Implement a small, documented HMR protocol.
+
+Support module updates where safe and fall back to a full reload when module state cannot be preserved.
+
+HMR must not silently preserve invalid component or server state.
+
+Provide tests for:
+
+- Module updates.
+- Deleted modules.
+- Syntax errors.
+- CSS changes.
+- Dependency graph invalidation.
+- WebSocket disconnects.
+- Full-reload fallback.
+
+## 7.3 Production bundler
+
+Build a production pipeline supporting:
+
+- Entry discovery.
+- Dependency resolution.
+- JavaScript transformation.
+- Tree shaking where supported.
+- Minification.
+- CSS processing and extraction.
+- Asset fingerprinting.
+- Code splitting.
+- Dynamic imports.
+- Static assets.
+- Source maps.
+- Client and server build targets.
+- Manifest generation.
+- Route-specific chunks.
+- Environment-specific configuration.
+
+Use an appropriate dependency strategy. A small number of well-chosen build dependencies is preferable to a fragile, homemade JavaScript bundler.
+
+GoodJS must not require users to install Vite, although the implementation may reuse proven low-level tooling if the architecture and licensing permit it.
+
+Document what is native to GoodJS and what is provided by internal dependencies.
+
+---
+
+# 8. CLI AND PROJECT GENERATOR
+
+Create a CLI named `good`.
+
+The following commands are the intended interface:
+
+```bash
+npx goodjs create my-app
+cd my-app
+npm install
+npm run dev
+```
+
+Verify the actual npm package and binary names before finalizing the commands.
+
+Support commands such as:
+
+```bash
+good create my-app
+good dev
+good build
+good preview
+good start
+good check
+good test
+good routes
+good analyze
+good doctor
+```
+
+Implement only commands that perform real work.
+
+The project generator should offer templates for:
+
+- Frontend-only application.
+- Backend-only service.
+- Middleware-only application.
+- Full-stack SSR application.
+- Static site.
+- API service.
+- Minimal JavaScript application.
+- TypeScript application.
+
+Keep scaffolding small and predictable.
+
+The generated projects should include:
+
+- Correct scripts.
+- TypeScript configuration where needed.
+- `.gitignore`.
+- Environment example.
+- Basic tests.
+- Example route or component.
+- README.
+- Appropriate package dependencies.
+
+Do not install optional full-stack dependencies into a backend-only project.
+
+---
+
+# 9. ZERO-DEPENDENCY STRATEGY
+
+A zero-dependency core is a goal, not an absolute requirement that compromises quality.
+
+## 9.1 Dependency policy
+
+Classify every dependency as one of:
+
+- Runtime dependency.
+- Development-only dependency.
+- Optional peer dependency.
+- Build-time dependency.
+- Test-only dependency.
+- Bundled toolchain dependency.
+
+For every dependency, document why it exists and whether it can reasonably be avoided.
+
+Use native web APIs where appropriate:
+
+- `fetch`
+- `Request`
+- `Response`
+- `URL`
+- `URLSearchParams`
+- `AbortController`
+- `ReadableStream`
+- `TextEncoder`
+- `TextDecoder`
+
+Use Node.js built-ins for Node-specific functionality.
+
+Do not create custom cryptographic implementations, unsafe parsers, or a complex compiler merely to avoid a dependency.
+
+## 9.2 Package-size budgets
+
+Define and measure:
+
+- Core server runtime.
+- Core reactivity runtime.
+- Browser UI runtime.
+- Router.
+- Full-stack client runtime.
+- Development tooling.
+- Compiler and build toolchain.
+
+Start with proposed budgets, then validate and adjust them using actual builds.
+
+For example, target a browser reactivity runtime below 5 KB minified and gzipped and a small application bootstrap below 15 KB minified and gzipped, excluding application code, styles, and optional features.
+
+These are engineering targets, not achieved results. Publish measured sizes and explain what is included.
+
+Avoid counting the entire compiler or development server as browser runtime payload.
+
+---
+
+# 10. TYPE SYSTEM AND DEVELOPER EXPERIENCE
+
+Use TypeScript in strict mode.
+
+Implement:
+
+- Typed route parameters.
+- Typed loader return values.
+- Typed action inputs.
+- Typed middleware context.
+- Typed component props.
+- Typed signals and computed values.
+- Typed request and response helpers.
+- Typed configuration.
+- Typed plugin APIs.
+- Useful compiler diagnostics.
+- Declaration generation.
+- Editor-friendly inference.
+
+Provide explicit escape hatches for advanced use cases.
+
+Avoid `any` and avoid excessively complicated type-level programming that produces unusable compiler errors.
+
+Test public types using dedicated compile-time tests.
+
+The framework should offer helpful errors for:
+
+- Missing route exports.
+- Invalid server/client imports.
+- Invalid component syntax.
+- Invalid route parameters.
+- Incorrect middleware contracts.
+- Unsupported deployment capabilities.
+- Incorrect configuration.
+- Missing optional dependencies.
+
+---
+
+# 11. EXTENSIBILITY AND PLUGINS
+
+Build a typed plugin API that allows third parties to extend GoodJS.
+
+Plugins should be able to contribute, where appropriate:
+
+- Middleware.
+- Routes.
+- Compiler transforms.
+- Build hooks.
+- Development-server hooks.
+- CLI commands.
+- Deployment adapters.
+- Runtime capabilities.
+- Diagnostics.
+
+Define stable lifecycle hooks and configuration schemas.
+
+Plugins must not be able to bypass security boundaries accidentally through a loosely typed global registry.
+
+Document plugin version compatibility and error handling.
+
+Create a working example plugin that registers middleware and a build hook.
+
+---
+
+# 12. PROJECT DIRECTORY STRUCTURE
+
+Create a maintainable monorepo with actual implementations, tests, and documentation.
+
+Use the following as a starting point:
+
+```text
+goodjs/
+├── apps/
+│   ├── docs/
+│   ├── playground/
+│   └── benchmark/
+├── packages/
+│   ├── core/
+│   │   ├── src/
+│   │   └── tests/
+│   ├── reactivity/
+│   │   ├── src/
+│   │   └── tests/
+│   ├── ui/
+│   │   ├── src/
+│   │   └── tests/
+│   ├── compiler/
+│   │   ├── src/
+│   │   ├── fixtures/
+│   │   └── tests/
+│   ├── router/
+│   │   ├── src/
+│   │   └── tests/
+│   ├── server/
+│   │   ├── src/
+│   │   └── tests/
+│   ├── middleware/
+│   │   ├── src/
+│   │   └── tests/
+│   ├── ssr/
+│   │   ├── src/
+│   │   └── tests/
+│   ├── build/
+│   │   ├── src/
+│   │   └── tests/
+│   ├── dev/
+│   │   ├── src/
+│   │   └── tests/
+│   ├── cli/
+│   │   ├── src/
+│   │   └── tests/
+│   ├── testing/
+│   │   ├── src/
+│   │   └── tests/
+│   ├── adapter-node/
+│   ├── adapter-static/
+│   ├── adapter-worker/
+│   ├── create/
+│   └── compat/
+├── templates/
+│   ├── frontend/
+│   ├── backend/
+│   ├── middleware/
+│   ├── fullstack/
+│   ├── static/
+│   └── api/
+├── examples/
+│   ├── counter/
+│   ├── todo/
+│   ├── blog/
+│   ├── api/
+│   ├── middleware/
+│   ├── ssr/
+│   ├── static/
+│   └── fullstack/
+├── docs/
+│   ├── getting-started.md
+│   ├── architecture.md
+│   ├── reactivity.md
+│   ├── components.md
+│   ├── compiler.md
+│   ├── routing.md
+│   ├── server.md
+│   ├── middleware.md
+│   ├── ssr.md
+│   ├── hydration.md
+│   ├── data-loading.md
+│   ├── build.md
+│   ├── dev-server.md
+│   ├── plugins.md
+│   ├── deployment.md
+│   ├── security.md
+│   ├── performance.md
+│   ├── migration.md
+│   ├── testing.md
+│   └── troubleshooting.md
+├── scripts/
+│   ├── build.ts
+│   ├── check-exports.ts
+│   ├── check-package-size.ts
+│   ├── verify-templates.ts
+│   ├── benchmark.ts
+│   ├── release-check.ts
+│   └── verify-dependencies.ts
+├── .github/
+│   ├── workflows/
+│   │   ├── ci.yml
+│   │   ├── codeql.yml
+│   │   └── release.yml
+│   ├── ISSUE_TEMPLATE/
+│   └── PULL_REQUEST_TEMPLATE.md
+├── tests/
+│   ├── integration/
+│   ├── end-to-end/
+│   ├── security/
+│   ├── fixtures/
+│   └── compatibility/
+├── .changeset/
+├── .editorconfig
+├── .gitignore
+├── .npmrc
+├── .prettierignore
+├── eslint.config.js
+├── prettier.config.js
+├── package.json
+├── package-lock.json
+├── tsconfig.json
+├── vitest.config.ts
+├── README.md
+├── CONTRIBUTING.md
+├── CODE_OF_CONDUCT.md
+├── SECURITY.md
+├── SUPPORT.md
+├── CHANGELOG.md
+├── LICENSE
+└── PUBLISHING.md
+```
+
+Adapt the directory structure when needed, but do not leave empty packages just to match the tree.
+
+The first working release may combine related packages internally. Every published package must have a clear purpose, valid exports, and passing tests.
+
+---
+
+# 13. TESTING AND QUALITY ASSURANCE
+
+Build a comprehensive test suite using a suitable test runner.
+
+## 13.1 Unit tests
+
+Cover:
+
+- Signal dependency tracking.
+- Computed values.
+- Effect cleanup.
+- Batch updates.
+- Component lifecycle.
+- DOM rendering.
+- Event handling.
+- Keyed list updates.
+- Router matching.
+- Query and parameter handling.
+- Middleware ordering.
+- Error handling.
+- HTTP response serialization.
+- Server-side rendering.
+- Hydration.
+- Compiler transformations.
+- CSS and asset handling.
+- HMR.
+- Production builds.
+- CLI argument parsing.
+- Project generation.
+- Plugin registration.
+- Type declarations.
+
+## 13.2 Integration tests
+
+Verify:
+
+- A generated frontend project builds and runs.
+- A backend-only project starts and responds.
+- Middleware can be composed and tested.
+- A full-stack route renders on the server.
+- Browser hydration preserves the expected initial output.
+- Form submissions and route actions work.
+- Static output can be deployed to a static host.
+- An application can be built without optional UI packages.
+- A backend-only application does not import browser globals.
+- ESM imports resolve correctly.
+- CommonJS imports resolve where supported.
+
+## 13.3 Security tests
+
+Include tests for:
+
+- HTML escaping.
+- Unsafe HTML APIs.
+- Path traversal.
+- Malformed request bodies.
+- Oversized requests.
+- Invalid headers.
+- Cookie configuration.
+- CSRF defenses.
+- Route authorization examples.
+- Server/client import boundaries.
+- Secret leakage in browser bundles.
+- SSR cross-request isolation.
+- Open redirects.
+- Host-header handling.
+- Plugin lifecycle errors.
+
+Use appropriate threat models rather than claiming that a small test suite proves complete security.
+
+## 13.4 Performance tests
+
+Benchmark GoodJS against relevant versions of established alternatives.
+
+For frontend benchmarks, include appropriate comparisons with:
+
+- React.
+- Vue.
+- Solid.
+- Preact or other relevant lightweight frameworks.
+
+For server benchmarks, include:
+
+- GoodJS.
+- Express.
+- Fastify or another appropriate server.
+- A minimal Node.js HTTP implementation.
+
+For full-stack comparisons, select equivalent applications using comparable rendering modes.
+
+Measure:
+
+- Initial rendering time.
+- Client runtime size.
+- Initial page load.
+- Reactive update cost.
+- Memory consumption.
+- Server throughput.
+- Latency distributions.
+- Production build time.
+- Development startup time.
+- HMR update latency.
+
+Keep the benchmark workloads, hardware, runtime versions, dependencies, and production settings documented.
+
+Do not compare a minimal GoodJS counter against a fully featured framework application and call the result a fair benchmark.
+
+Publish raw results and scripts.
+
+---
+
+# 14. BUILD CONFIGURATION AND NPM PACKAGING
+
+## 14.1 Package exports
+
+Each publishable package must define valid:
+
+- `name`
+- `version`
+- `description`
+- `license`
+- `type`
+- `main`
+- `module` where appropriate
+- `types`
+- `exports`
+- `files`
+- `engines`
+- `scripts`
+- `dependencies`
+- `devDependencies`
+- `peerDependencies` where appropriate
+
+Use ESM as the primary format.
+
+Provide CommonJS support only where it can be built and tested correctly. Do not claim compatibility when generated files or dependencies do not support it.
+
+Generate declaration files and verify them against actual package exports.
+
+## 14.2 Dependency boundaries
+
+The core runtime should remain lightweight.
+
+Ensure that:
+
+- Backend-only imports do not load browser rendering code.
+- Frontend-only imports do not load the Node.js server.
+- Browser runtime imports do not expose server secrets.
+- Build tooling is not bundled into the browser runtime.
+- Optional packages are loaded only when requested.
+- Every package has explicit dependency boundaries.
+- No package imports another package's private source paths.
+
+## 14.3 Build scripts
+
+Create appropriate scripts for:
+
+```bash
+npm run build
+npm run dev
+npm run test
+npm run test:integration
+npm run test:e2e
+npm run typecheck
+npm run lint
+npm run format:check
+npm run check:exports
+npm run check:packages
+npm run check:templates
+npm run check:size
+npm run benchmark
+npm run release:check
+```
+
+These commands are a target interface. Implement the corresponding scripts or document clearly which are unavailable in the current development phase.
+
+The root scripts must work from a fresh clone.
+
+---
+
+# 15. DOCUMENTATION AND DEVELOPER EXPERIENCE
+
+Write a professional README with:
+
+1. What GoodJS is.
+2. The problems it solves.
+3. Why it exists.
+4. Installation.
+5. A working frontend example.
+6. A working backend example.
+7. A working middleware example.
+8. A complete full-stack example.
+9. React/Vue/Express/Vite interoperability.
+10. Performance and package-size measurements.
+11. Architecture overview.
+12. TypeScript support.
+13. Browser compatibility.
+14. Deployment targets.
+15. Security defaults.
+16. Testing.
+17. CLI reference.
+18. Package structure.
+19. Contributing.
+20. Roadmap.
+21. License.
+
+Do not claim to replace every competing framework in every situation. Explain where GoodJS is strong and where a mature alternative may remain more appropriate.
+
+Create an approachable Getting Started guide.
+
+A developer should be able to create and run a simple frontend application with minimal commands:
+
+```bash
+npx goodjs create my-app
+cd my-app
+npm install
+npm run dev
+```
+
+A backend-only project should also be possible:
+
+```bash
+npx goodjs create my-api --template backend
+cd my-api
+npm install
+npm run dev
+```
+
+Verify that the actual CLI accepts these arguments and that the generated projects run successfully.
+
+Provide documentation for:
+
+- Component development.
+- Reactive state.
+- Routing.
+- Server-side rendering.
+- Middleware.
+- API development.
+- Forms and actions.
+- Testing.
+- Plugin development.
+- Build configuration.
+- Deployment.
+- Migration from React.
+- Migration from Vue.
+- Migration from Express.
+- Migration from Vite-based applications.
+
+---
+
+# 16. CI/CD, RELEASES, AND OPEN-SOURCE GOVERNANCE
+
+Create GitHub Actions workflows that perform:
+
+- Dependency installation.
+- Linting.
+- Formatting validation.
+- Type checking.
+- Unit tests.
+- Integration tests where supported.
+- Production builds.
+- Template verification.
+- Export checks.
+- Package-size checks.
+- Security scanning.
+- Package tarball validation.
+
+Use lockfile-based installation and appropriately pinned workflow actions.
+
+Add contribution guidelines, a code of conduct, a security policy, a support guide, and a documented release process.
+
+Use semantic versioning and a changelog.
+
+Document npm authentication, two-factor authentication, provenance where supported, and trusted publishing.
+
+Do not expose publishing credentials in source code, repository files, or logs.
+
+Do not publish automatically during initial setup.
+
+---
+
+# 17. IMPLEMENTATION ROADMAP
+
+Implement the project in phases.
+
+## Phase 1: Foundation
+
+Create the monorepo, TypeScript configuration, shared types, errors, dependency policy, package exports, and CI.
+
+Acceptance criteria:
+
+- Fresh dependency installation succeeds.
+- Type checking works.
+- The initial package builds.
+- The core exports resolve correctly.
+
+## Phase 2: Reactivity and UI
+
+Implement signals, effects, computed values, batching, component rendering, event handling, and lifecycle cleanup.
+
+Acceptance criteria:
+
+- Counter example works.
+- Updates are reactive.
+- Cleanup prevents retained subscriptions.
+- Unit tests pass.
+- A small browser application can be built.
+
+## Phase 3: Routing and backend
+
+Implement routing, HTTP server, middleware, request context, errors, and API endpoints.
+
+Acceptance criteria:
+
+- Backend-only applications work.
+- Middleware ordering is tested.
+- Dynamic routes work.
+- Request and response handling is tested.
+
+## Phase 4: Compiler and build tooling
+
+Implement component transformation, dependency resolution, development serving, asset processing, production output, and HMR.
+
+Acceptance criteria:
+
+- A generated application builds.
+- Development mode works.
+- Production output runs independently of the development server.
+- Compiler errors include useful source locations.
+
+## Phase 5: SSR and full stack
+
+Implement SSR, hydration, loaders, actions, server/client boundaries, and route manifests.
+
+Acceptance criteria:
+
+- Server-rendered pages produce valid HTML.
+- Hydration works for supported components.
+- Server-only modules stay out of client bundles.
+- Multiple concurrent requests remain isolated.
+
+## Phase 6: CLI and templates
+
+Implement project generation, CLI commands, example applications, and template validation.
+
+Acceptance criteria:
+
+- Generated projects install.
+- Generated projects build.
+- Frontend, backend, and full-stack templates run.
+
+## Phase 7: Performance and security
+
+Add benchmarks, package-size reports, security tests, and profiling.
+
+Acceptance criteria:
+
+- Measurements are reproducible.
+- No unsupported performance claims remain.
+- Known security limitations are documented.
+
+## Phase 8: Public release preparation
+
+Finalize documentation, package metadata, license, release automation, and npm tarball verification.
+
+Acceptance criteria:
+
+- Every published package builds.
+- Every advertised entry point exists.
+- A clean consumer project can install and import the package.
+- Required tests pass.
+- Publishing documentation is complete.
+- No release occurs without authorization.
+
+---
+
+# 18. DEFINITION OF DONE
+
+The first public release is ready only when the following conditions are satisfied.
+
+### Framework functionality
+
+- [ ] Native reactive state management.
+- [ ] Native component and DOM rendering.
+- [ ] Working router.
+- [ ] Working backend HTTP server.
+- [ ] Composable middleware.
+- [ ] TypeScript support.
+- [ ] Development server.
+- [ ] Production build pipeline.
+- [ ] CLI and working project generator.
+- [ ] At least one complete full-stack example.
+- [ ] SSR and hydration if advertised as release features.
+- [ ] Plugin extension API.
+- [ ] Clear frontend-only and backend-only entry points.
+
+### Engineering quality
+
+- [ ] Automated tests pass.
+- [ ] Type checking passes.
+- [ ] Lint and formatting checks pass.
+- [ ] ESM imports work.
+- [ ] CommonJS works if advertised.
+- [ ] Generated declarations match the public API.
+- [ ] Package exports resolve correctly.
+- [ ] Generated templates build and run.
+- [ ] Security-sensitive behavior is tested.
+- [ ] Browser output size is measured.
+- [ ] Benchmarks are reproducible.
+- [ ] Documentation matches the actual implementation.
+
+### Release readiness
+
+- [ ] Package names and metadata are verified.
+- [ ] License and dependency licenses are reviewed.
+- [ ] The npm tarball contains only intended files.
+- [ ] A clean consumer project can use the published artifacts.
+- [ ] CI is operational.
+- [ ] Security reporting instructions are available.
+- [ ] Publishing steps are documented.
+- [ ] No credentials are committed.
+- [ ] The release remains unpublished until authorized.
+
+---
+
+# 19. REQUIRED FINAL HANDOFF
+
+When implementation work is complete, report:
+
+1. Architecture and major design decisions.
+2. Actual directory structure.
+3. Files and modules implemented.
+4. Packages and their dependency boundaries.
+5. Working features.
+6. Features that remain planned.
+7. Build commands and results.
+8. Unit, integration, and security test results.
+9. Actual package sizes and benchmark results.
+10. Known limitations.
+11. Exact commands for starting development and running tests.
+12. Exact commands for preparing the first npm release.
+
+If you cannot execute a command, say so explicitly.
+
+If a feature cannot be implemented safely or completely in the available time, reduce the advertised scope instead of delivering a misleading placeholder.
+
+**Begin by inspecting the environment, verifying current JavaScript and browser platform capabilities, and creating the working repository. Then implement the framework in the phase order above. Do not stop after producing a plan.**
+
+The ultimate goal is a framework that developers choose because GoodJS is fast, understandable, dependable, secure, and pleasant to use—not because its documentation makes unsupported claims.
+
