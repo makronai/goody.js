@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { BookOpen, Check, Copy, Code, Layers, Shield, Zap, Sparkles } from 'lucide-react';
+import { BookOpen, Check, Copy, Code, Layers, Shield, Zap, Sparkles, Package, Terminal } from 'lucide-react';
 
 export const ArchitectureDocs: React.FC = () => {
-  const [activeSection, setActiveSection] = useState<'manifesto' | 'migration' | 'api' | 'security'>('manifesto');
+  const [activeSection, setActiveSection] = useState<'manifesto' | 'migration' | 'api' | 'security' | 'npm'>('manifesto');
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
   const copySnippet = (key: string, text: string) => {
@@ -59,6 +59,15 @@ export const ArchitectureDocs: React.FC = () => {
             }`}
           >
             Security & Threat Model
+          </button>
+          <button
+            onClick={() => setActiveSection('npm')}
+            className={`px-3 py-1.5 rounded-lg font-semibold transition cursor-pointer flex items-center gap-1.5 ${
+              activeSection === 'npm' ? 'bg-teal-500 text-slate-950' : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            <Package className="w-3.5 h-3.5 text-emerald-400" />
+            NPM Package & Distribution
           </button>
         </div>
       </div>
@@ -248,6 +257,156 @@ export const ArchitectureDocs: React.FC = () => {
                   First-class <code className="text-purple-300 font-mono">securityHeaders()</code> middleware injects strict CSP, X-Content-Type-Options: nosniff,
                   X-Frame-Options: SAMEORIGIN, and HSTS.
                 </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {activeSection === 'npm' && (
+        <div className="space-y-6">
+          {/* Quick Install Banner */}
+          <div className="p-6 rounded-2xl bg-gradient-to-r from-emerald-950/40 via-slate-900 to-slate-900 border border-emerald-500/30 space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <div className="flex items-center gap-2">
+                  <Package className="w-5 h-5 text-emerald-400" />
+                  <h3 className="text-base font-bold text-white">NPM Ready & Standalone Distribution</h3>
+                </div>
+                <p className="text-xs text-slate-300 mt-1">
+                  GoodyJS is published as a zero-dependency, modular package with comprehensive TypeScript declarations, dual-mode subpaths, and CLI executables.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2 bg-slate-950 px-4 py-2 rounded-xl border border-emerald-500/30">
+                <code className="text-sm font-mono text-emerald-300">npm install goodyjs</code>
+                <button
+                  onClick={() => copySnippet('npm-install', 'npm install goodyjs')}
+                  className="p-1.5 hover:bg-slate-800 rounded-md transition text-slate-400 hover:text-white cursor-pointer"
+                  title="Copy command"
+                >
+                  {copiedKey === 'npm-install' ? (
+                    <Check className="w-4 h-4 text-emerald-400" />
+                  ) : (
+                    <Copy className="w-4 h-4" />
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {/* Quick Metrics */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+              <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800">
+                <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider block">NPM Package Size</span>
+                <span className="text-base font-extrabold text-emerald-400 font-mono">37.6 KB</span>
+                <span className="text-[10px] text-slate-400 block mt-0.5">156 KB unpacked (100 files)</span>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800">
+                <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider block">Runtime Deps</span>
+                <span className="text-base font-extrabold text-teal-400 font-mono">0 External</span>
+                <span className="text-[10px] text-slate-400 block mt-0.5">Native Node.js & Web standards</span>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800">
+                <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider block">Export Subpaths</span>
+                <span className="text-base font-extrabold text-cyan-400 font-mono">9 Verified</span>
+                <span className="text-[10px] text-slate-400 block mt-0.5">Full TypeScript .d.ts + maps</span>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800">
+                <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider block">CLI Binary</span>
+                <span className="text-base font-extrabold text-purple-400 font-mono">npx good</span>
+                <span className="text-[10px] text-slate-400 block mt-0.5">Standalone zero-config runner</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Subpath Exports & Import Guide */}
+          <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+            <h4 className="text-sm font-bold text-white flex items-center gap-2">
+              <Code className="w-4 h-4 text-cyan-400" />
+              Supported Package Subpaths & Usage Examples
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-emerald-400 font-mono">import from 'goodyjs'</span>
+                  <button
+                    onClick={() => copySnippet('import-root', "import { signal, computed, effect, createServer, h, render } from 'goodyjs';")}
+                    className="p-1 hover:bg-slate-800 rounded transition text-slate-400 hover:text-white cursor-pointer"
+                  >
+                    {copiedKey === 'import-root' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                  </button>
+                </div>
+                <p className="text-[11px] text-slate-400">
+                  Unified export uniting all reactivity primitives, virtual DOM engine, server constructor, middleware helpers, SSR serializer, and CLI runners.
+                </p>
+                <pre className="p-2.5 rounded-lg bg-slate-900/90 text-[11px] font-mono text-slate-300 overflow-x-auto">
+{`import { signal, computed, createServer, h } from 'goodyjs';
+
+const count = signal(0);
+const double = computed(() => count() * 2);`}
+                </pre>
+              </div>
+
+              <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-cyan-400 font-mono">import from 'goodyjs/reactivity'</span>
+                  <button
+                    onClick={() => copySnippet('import-reactivity', "import { signal, computed, effect, batch } from 'goodyjs/reactivity';")}
+                    className="p-1 hover:bg-slate-800 rounded transition text-slate-400 hover:text-white cursor-pointer"
+                  >
+                    {copiedKey === 'import-reactivity' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                  </button>
+                </div>
+                <p className="text-[11px] text-slate-400">
+                  Standalone fine-grained reactive core (under 0.75 KB gzipped). Zero DOM or Node dependencies; runs in any JS runtime.
+                </p>
+                <pre className="p-2.5 rounded-lg bg-slate-900/90 text-[11px] font-mono text-slate-300 overflow-x-auto">
+{`import { signal, computed, effect, batch } from 'goodyjs/reactivity';
+
+const state = signal({ user: 'Dewan' });`}
+                </pre>
+              </div>
+
+              <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-purple-400 font-mono">import from 'goodyjs/server'</span>
+                  <button
+                    onClick={() => copySnippet('import-server', "import { createServer } from 'goodyjs/server';")}
+                    className="p-1 hover:bg-slate-800 rounded transition text-slate-400 hover:text-white cursor-pointer"
+                  >
+                    {copiedKey === 'import-server' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                  </button>
+                </div>
+                <p className="text-[11px] text-slate-400">
+                  Native HTTP server with parameterized routing, streaming body parser, and onion middleware support.
+                </p>
+                <pre className="p-2.5 rounded-lg bg-slate-900/90 text-[11px] font-mono text-slate-300 overflow-x-auto">
+{`import { createServer } from 'goodyjs/server';
+
+const app = createServer();
+app.get('/api/health', () => ({ ok: true }));
+await app.listen({ port: 3000 });`}
+                </pre>
+              </div>
+
+              <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-pink-400 font-mono">CLI: npx good create</span>
+                  <button
+                    onClick={() => copySnippet('cli-create', 'npx good create my-app --template fullstack')}
+                    className="p-1 hover:bg-slate-800 rounded transition text-slate-400 hover:text-white cursor-pointer"
+                  >
+                    {copiedKey === 'cli-create' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                  </button>
+                </div>
+                <p className="text-[11px] text-slate-400">
+                  Executable binary shipped in the NPM package under <code className="text-pink-300 font-mono">"bin": &#123; "good": "./bin/good.js" &#125;</code>.
+                </p>
+                <pre className="p-2.5 rounded-lg bg-slate-900/90 text-[11px] font-mono text-slate-300 overflow-x-auto">
+{`# Scaffold full-stack app
+npx good create my-app --template fullstack
+cd my-app && npm install && good dev`}
+                </pre>
               </div>
             </div>
           </div>
