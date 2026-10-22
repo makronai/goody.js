@@ -1,6 +1,6 @@
 # GoodyJS (`goodyjs`)
 
-[![npm version](https://img.shields.io/badge/npm-v0.1.0-emerald.svg)](https://www.npmjs.com/package/goodyjs)
+[![npm version](https://img.shields.io/badge/npm-v0.1.2-emerald.svg)](https://www.npmjs.com/package/goodyjs)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Tests: 34/34 Passing](https://img.shields.io/badge/Tests-34%2F34%20Passing-brightgreen.svg)](#testing)
 [![Dependencies: 0 Runtime](https://img.shields.io/badge/Dependencies-0%20Runtime-blueviolet.svg)](#architecture)
@@ -21,7 +21,7 @@ It replaces the typical multi-gigabyte stack of React + Vite + Express + Redux w
   - [1. Frontend Reactive App](#1-frontend-reactive-app)
   - [2. Backend HTTP Service](#2-backend-http-service)
   - [3. Full-Stack SSR with Hydration](#3-full-stack-ssr-with-hydration)
-- [CLI Tooling (`good`)](#cli-tooling-good)
+- [CLI Tooling (`goody` / `good`)](#cli-tooling-goody--good)
 - [Module Reference](#module-reference)
   - [`goodyjs` / `goodyjs/reactivity`](#goodyjsreactivity)
   - [`goodyjs/ui` & JSX](#goodyjsui)
@@ -86,6 +86,8 @@ npm install -g goodyjs
 You can also run the CLI without installing via `npx`:
 
 ```bash
+npx goody --help
+# or:
 npx good --help
 ```
 
@@ -179,34 +181,34 @@ await app.listen({ port: 3000 });
 
 ---
 
-## CLI Tooling (`good`)
+## CLI Tooling (`goody` / `good`)
 
-GoodyJS includes a native binary `good` available upon installing `goodyjs`:
+GoodyJS includes native CLI binaries `goody` and `good` available upon installing `goodyjs`:
 
 ```bash
 # Print available commands
-good help
+goody help   # or: good help
 
 # Scaffold a new project from templates (frontend | backend | fullstack)
-good create my-app --template fullstack
+goody create my-app --template fullstack
 
 # Run system health and environment diagnostics
-good doctor
+goody doctor
 
 # Audit registered route graph and endpoints
-good routes
+goody routes
 
 # Start zero-config development server
-good dev
+goody dev
 
 # Compile application for production
-good build
+goody build
 
 # Run production server
-good start
+goody start
 
 # Verify static constraints and zero-dependency guarantees
-good check
+goody check
 ```
 
 ---

@@ -38,15 +38,18 @@ function normalizeDeclarationImports(dir: string) {
 normalizeDeclarationImports(DIST_DIR);
 console.log('✅ Type declarations normalized.');
 
-// 3. Ensure bin/good.js exists and is executable
-const rootBin = path.join(ROOT_DIR, 'bin', 'good.js');
-if (fs.existsSync(rootBin)) {
-  fs.chmodSync(rootBin, 0o755);
+// 3. Ensure bin/good.js and bin/goody.js exist and are executable
+const rootBinGood = path.join(ROOT_DIR, 'bin', 'good.js');
+const rootBinGoody = path.join(ROOT_DIR, 'bin', 'goody.js');
+if (fs.existsSync(rootBinGood)) {
+  fs.chmodSync(rootBinGood, 0o755);
+}
+if (fs.existsSync(rootBinGoody)) {
+  fs.chmodSync(rootBinGoody, 0o755);
 }
 
-// 4. Sync package distribution to packages/goodjs and packages/goodyjs
+// 4. Sync package distribution to packages/goodyjs
 const targetDirs = [
-  path.join(PACKAGES_DIR, 'goodjs'),
   path.join(PACKAGES_DIR, 'goodyjs'),
 ];
 
@@ -65,8 +68,14 @@ for (const pkgDir of targetDirs) {
   // Copy bin
   const targetBinDir = path.join(pkgDir, 'bin');
   fs.mkdirSync(targetBinDir, { recursive: true });
-  fs.copyFileSync(rootBin, path.join(targetBinDir, 'good.js'));
-  fs.chmodSync(path.join(targetBinDir, 'good.js'), 0o755);
+  if (fs.existsSync(rootBinGood)) {
+    fs.copyFileSync(rootBinGood, path.join(targetBinDir, 'good.js'));
+    fs.chmodSync(path.join(targetBinDir, 'good.js'), 0o755);
+  }
+  if (fs.existsSync(rootBinGoody)) {
+    fs.copyFileSync(rootBinGoody, path.join(targetBinDir, 'goody.js'));
+    fs.chmodSync(path.join(targetBinDir, 'goody.js'), 0o755);
+  }
 
   // Copy README.md & LICENSE
   if (fs.existsSync(path.join(ROOT_DIR, 'README.md'))) {
@@ -77,13 +86,13 @@ for (const pkgDir of targetDirs) {
   }
 
   // Ensure package.json
-  const sourcePkgJson = path.join(PACKAGES_DIR, 'goodjs', 'package.json');
+  const sourcePkgJson = path.join(PACKAGES_DIR, 'goodyjs', 'package.json');
   const targetPkgJson = path.join(pkgDir, 'package.json');
   if (fs.existsSync(sourcePkgJson) && targetPkgJson !== sourcePkgJson) {
     fs.copyFileSync(sourcePkgJson, targetPkgJson);
   }
 }
-console.log('✅ Synchronized artifacts to packages/goodjs and packages/goodyjs.');
+console.log('✅ Synchronized artifacts to packages/goodyjs.');
 
 // 5. Verify exports
 const requiredExports = [

@@ -1,6 +1,6 @@
 {
   "name": "goodyjs",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A lightweight, zero-dependency full-stack JavaScript framework uniting reactive UI, native HTTP server, composable middleware, SSR, and zero-config tooling.",
   "author": "dwmk",
   "license": "MIT",
@@ -9,6 +9,7 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
+    "goody": "./bin/goody.js",
     "good": "./bin/good.js"
   },
   "exports": {

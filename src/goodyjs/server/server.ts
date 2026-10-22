@@ -1,9 +1,9 @@
 import { composeMiddleware } from '../middleware/middleware.ts';
-import type { GoodRequest, GoodResponse, MiddlewareContext, MiddlewareHandler } from '../middleware/types.ts';
+import type { GoodRequest, GoodResponse, MiddlewareContext, MiddlewareHandler, NextFunction } from '../middleware/types.ts';
 import { matchRoutePattern, parseQuery } from '../router/router.ts';
-import type { GoodServerInstance, ListenOptions, RouteHandler, ServerRoute } from './types.ts';
+import type { GoodServerInstance, GoodyServerInstance, ListenOptions, RouteHandler, ServerRoute } from './types.ts';
 
-export function createServer(): GoodServerInstance {
+export function createServer(): GoodyServerInstance {
   const middlewares: MiddlewareHandler[] = [];
   const routes: ServerRoute[] = [];
 
@@ -11,7 +11,7 @@ export function createServer(): GoodServerInstance {
     routes.push({ method: method.toUpperCase(), pattern, handler });
   }
 
-  const instance: GoodServerInstance = {
+  const instance: GoodyServerInstance = {
     use(mw: MiddlewareHandler) {
       middlewares.push(mw);
       return instance;
@@ -165,7 +165,7 @@ export function createServer(): GoodServerInstance {
       const fullChain = [...middlewares];
       if (matchedRoute) {
         const handler = matchedRoute.handler;
-        fullChain.push(async (c, next) => {
+        fullChain.push(async (c: MiddlewareContext, next: NextFunction) => {
           const result = await handler(c);
           if (!c.res.isSent && result !== undefined) {
             if (typeof result === 'object' && result !== null) {
@@ -177,7 +177,7 @@ export function createServer(): GoodServerInstance {
           await next();
         });
       } else {
-        fullChain.push(async (c) => {
+        fullChain.push(async (c: MiddlewareContext) => {
           if (!c.res.isSent) {
             c.res.status(404).json({
               error: 'Not Found',
