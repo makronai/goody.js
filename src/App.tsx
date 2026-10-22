@@ -12,7 +12,7 @@ export default function App() {
       <main className="flex-1 max-w-4xl w-full mx-auto px-4 py-16 flex flex-col items-center justify-center text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold mb-6">
           <Package className="w-3.5 h-3.5" />
-          <span>NPM Package: goodyjs v0.1.2</span>
+          <span>NPM Package: goodyjs v0.1.4</span>
         </div>
 
         <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white mb-4">

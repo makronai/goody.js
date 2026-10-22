@@ -1,6 +1,6 @@
 # GoodyJS (`goodyjs`)
 
-[![npm version](https://img.shields.io/badge/npm-v0.1.2-emerald.svg)](https://www.npmjs.com/package/goodyjs)
+[![npm version](https://img.shields.io/badge/npm-v0.1.4-emerald.svg)](https://www.npmjs.com/package/goodyjs)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Tests: 34/34 Passing](https://img.shields.io/badge/Tests-34%2F34%20Passing-brightgreen.svg)](#testing)
 [![Dependencies: 0 Runtime](https://img.shields.io/badge/Dependencies-0%20Runtime-blueviolet.svg)](#architecture)

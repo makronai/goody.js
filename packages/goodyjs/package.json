@@ -1,6 +1,6 @@
 {
   "name": "goodyjs",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "A lightweight, dependency-light full-stack JavaScript framework uniting reactive UI, native HTTP server, composable middleware, SSR, and zero-config tooling.",
   "author": "GoodyJS Maintainers",
   "license": "MIT",
@@ -57,7 +57,8 @@
       "types": "./dist/ui/h.d.ts",
       "import": "./dist/ui/h.js",
       "default": "./dist/ui/h.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "files": [
     "dist",
